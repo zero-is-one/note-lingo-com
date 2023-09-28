@@ -4,7 +4,7 @@ import { GameContext, GameContextType } from "@/contexts/GameContext";
 export const useGameContext = () => {
   const context = useContext(GameContext);
   if (!context) {
-    throw new Error("useGameContext must be used within a Microphone Provider");
+    throw new Error("useGameContext must be used within a Game Provider");
   }
   return context as GameContextType;
 };

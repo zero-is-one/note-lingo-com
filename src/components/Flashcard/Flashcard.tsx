@@ -25,8 +25,6 @@ type FlashcardProps = {
   onIncorrectGuess: () => void;
 };
 
-type FlashcardGenre = "sound" | "name" | "notation";
-
 const coutdownSeconds = 3;
 
 export const Flashcard = ({
@@ -35,12 +33,6 @@ export const Flashcard = ({
   onIncorrectGuess,
 }: FlashcardProps) => {
   const [note, setNote] = useState<string | null>(null);
-  //random genre to start
-  const [genre] = useState<FlashcardGenre>(
-    ["sound", "name", "notation"][
-      Math.floor(Math.random() * 3)
-    ] as FlashcardGenre
-  );
 
   const [count, { startCountdown }] = useCountdown({
     countStart: coutdownSeconds,
@@ -72,17 +64,17 @@ export const Flashcard = ({
         <Card p={6}>
           <Button onClick={onCorrectGuess}>onCorrectGuess</Button>
           <VStack>
-            {genre === "notation" && (
+            {flashcard.genre === "notation" && (
               <Box width={"50vw"}>
                 <SingleNote note={Note.get(flashcard.note)} />
               </Box>
             )}
-            {genre === "name" && (
+            {flashcard.genre === "name" && (
               <Heading fontSize="15cqw" p={3}>
                 {flashcard.note}
               </Heading>
             )}
-            {genre === "sound" && (
+            {flashcard.genre === "sound" && (
               <SoundButton
                 duration="1n"
                 playOnMount={true}
@@ -117,6 +109,12 @@ export const Flashcard = ({
       )}
 
       <Progress
+        sx={{
+          "& > div:first-of-type": {
+            transitionProperty: "width",
+            transitionDuration: ".2s",
+          },
+        }}
         value={(100 * count) / coutdownSeconds}
         position={"absolute"}
         bottom={0}

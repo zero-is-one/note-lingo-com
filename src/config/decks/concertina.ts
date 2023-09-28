@@ -1,7 +1,8 @@
-import { Deck, Card } from "@/types";
+import { BellowState, Flashcard } from "@/types";
 import { concertinaLayout } from "../layouts/concertina";
+import { arrayMove } from "@/utils/array";
 
-const buttonOrder = [
+const buttonOrder: Array<[number, BellowState]> = [
   //Home button order
   [12, "push"],
   [14, "pull"],
@@ -73,16 +74,33 @@ const buttonOrder = [
   [29, "push"],
 ];
 
-export const cards: Card[] = buttonOrder.map(([buttonIndex, bellowState]) => ({
-  buttonIndex,
-  bellowState,
-  id: `${buttonIndex}-${bellowState}`,
-  note: concertinaLayout[buttonIndex][bellowState],
-}));
+let cards: Flashcard[] = [];
 
-export const concertinaDeck: Deck = {
-  id: "concertina",
-  name: "Concertina",
-  description: "A 30 button concertina",
-  cards,
-};
+buttonOrder.forEach(([buttonIndex, bellowState]) => {
+  const cardProtype = {
+    buttonIndex,
+    bellowState,
+    note: concertinaLayout[buttonIndex][bellowState],
+  };
+
+  cards.push({
+    ...cardProtype,
+    genre: "name",
+    id: `${buttonIndex}-${cardProtype.note}-${bellowState}-name`,
+  });
+  cards.push({
+    ...cardProtype,
+    genre: "notation",
+    id: `${buttonIndex}-${cardProtype.note}-${bellowState}-notation`,
+  });
+  cards.push({
+    ...cardProtype,
+    genre: "sound",
+    id: `${buttonIndex}-${cardProtype.note}-${bellowState}-sound`,
+  });
+});
+
+cards = arrayMove(cards, 3, 0);
+cards = arrayMove(cards, 6, 1);
+
+export const deck = cards;
