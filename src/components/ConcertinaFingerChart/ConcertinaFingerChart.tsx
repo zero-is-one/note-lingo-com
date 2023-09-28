@@ -2,15 +2,17 @@ import { AbsoluteCenter, VStack, Icon, Button } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { concertinaLayout } from "@/config/layouts/concertina";
 import { CgArrowAlignH, CgArrowsMergeAltH } from "react-icons/cg";
+import { BellowState } from "@/types";
+import { PushPullIcon } from "../PushPullIcon/PushPullIcon";
 
 export const ConcertinaFingerChart = ({
   activeButtonIndex,
-  isPushingBellows,
+  bellowState,
 }: {
-  activeButtonIndex: number;
-  isPushingBellows: boolean;
+  activeButtonIndex?: number;
+  bellowState: BellowState;
 }) => {
-  const color = isPushingBellows ? "purple" : "orange";
+  const color = bellowState === "push" ? "bellowPush" : "bellowPull";
   return (
     <VStack style={{ position: "relative" }}>
       <Layout>
@@ -23,27 +25,22 @@ export const ConcertinaFingerChart = ({
                 fontSize={"2.3cqw"}
                 height={"100%"}
                 width={"100%"}
-                colorScheme={color}
+                colorScheme={active ? color : "teal"}
                 padding={0}
                 margin={0}
                 minW={0}
-                variant={active ? "solid" : "outline"}
-                borderWidth={active ? 0 : ".6cqw"}
+                variant={"solid"}
+                opacity={active ? 1 : 0.6}
+                borderRadius={active ? "sm" : "full"}
               >
-                <span style={{ opacity: active ? 1 : 0.2 }}>
-                  {isPushingBellows ? button.push : button.pull}
-                </span>
+                {active ? button[bellowState] : ""}
               </Button>
             </div>
           );
         })}
       </Layout>
-      <AbsoluteCenter pt={4}>
-        <Icon
-          color={`${color}.600`}
-          boxSize={"12cqw"}
-          as={isPushingBellows ? CgArrowsMergeAltH : CgArrowAlignH}
-        />
+      <AbsoluteCenter pt={10}>
+        <PushPullIcon state={bellowState} />
       </AbsoluteCenter>
     </VStack>
   );
@@ -72,16 +69,16 @@ const Layout = styled.div`
     overflow: hidden;
     min-width: 0;
 
-    :nth-child(n + 11) {
+    :nth-of-type(n + 11) {
       transform: translate(50%, 0);
     }
-    :nth-child(n + 16) {
+    :nth-of-type(n + 16) {
       transform: translate(-50%, 0);
     }
-    :nth-child(n + 21) {
+    :nth-of-type(n + 21) {
       transform: translate(100%, 0);
     }
-    :nth-child(n + 26) {
+    :nth-of-type(n + 26) {
       transform: translate(-100%, 0);
     }
   }

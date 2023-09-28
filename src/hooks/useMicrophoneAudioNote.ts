@@ -2,6 +2,7 @@ import { useMicrophoneContext } from "./useMicrophoneContext";
 import * as Pitchfinder from "pitchfinder";
 import useAnimationFrame from "@phntms/use-animation-frame";
 import { Note } from "tonal";
+import { useCallback } from "react";
 
 export const useMicrophoneAudioNote = (
   callback: (note: string | null) => void,
@@ -17,12 +18,14 @@ export const useMicrophoneAudioNote = (
     //sensitivity: 0.1,
   });
 
-  useAnimationFrame(() => {
+  const anim = useCallback(() => {
     const pitch = detectPitch(analyser.getValue() as Float32Array);
 
     const pitchWithinBounds = pitch && pitch < 4699 && pitch > 73;
     if (!pitch || !pitchWithinBounds) return callback(null);
 
     callback(Note.fromFreq(pitch));
-  }, framesPerSecond);
+  }, [callback, detectPitch, analyser]);
+
+  useAnimationFrame(anim, framesPerSecond);
 };

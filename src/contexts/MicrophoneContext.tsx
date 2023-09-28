@@ -5,7 +5,7 @@ const mic = new Tone.UserMedia();
 const analyser = new Tone.Analyser({ type: "waveform" });
 mic.connect(analyser);
 
-type MicrophoneContextType = {
+export type MicrophoneContextType = {
   requestMicrophone: () => Promise<void>;
   hasPermission: boolean;
   isPermissionDenied: boolean;

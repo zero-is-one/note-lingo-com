@@ -1,5 +1,8 @@
 import { useContext } from "react";
-import { MicrophoneContext } from "@/contexts/Microphone";
+import {
+  MicrophoneContext,
+  MicrophoneContextType,
+} from "@/contexts/MicrophoneContext";
 
 export const useMicrophoneContext = () => {
   const context = useContext(MicrophoneContext);
@@ -8,5 +11,5 @@ export const useMicrophoneContext = () => {
       "useMicrophoneContext must be used within a Microphone Provider"
     );
   }
-  return context;
+  return context as MicrophoneContextType;
 };

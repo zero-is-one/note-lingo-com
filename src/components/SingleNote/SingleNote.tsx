@@ -19,11 +19,18 @@ ${AbcNotation.scientificToAbcNotation(note.name)}
 `;
 
   return (
-    <div style={{ width: 400 }}>
-      <AbcRenderer
-        abc={notation}
-        params={{ scale: 1, staffwidth: 80, responsive: "resize" }}
-      />
-    </div>
+    <AbcRenderer
+      abc={notation}
+      params={{
+        selectTypes: [],
+        scale: 1,
+        staffwidth: 80,
+        responsive: "resize",
+        paddingtop: 0,
+        paddingbottom: 3,
+        paddingright: 3,
+        paddingleft: 3,
+      }}
+    />
   );
 };
