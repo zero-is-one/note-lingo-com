@@ -21,8 +21,8 @@ import { SoundButton } from "./SoundButton";
 
 type FlashcardProps = {
   flashcard: FlashcardType;
-  onSuccess: () => void;
-  onFailure: () => void;
+  onCorrectGuess: () => void;
+  onIncorrectGuess: () => void;
 };
 
 type FlashcardGenre = "sound" | "name" | "notation";
@@ -31,8 +31,8 @@ const coutdownSeconds = 3;
 
 export const Flashcard = ({
   flashcard,
-  onSuccess,
-  onFailure,
+  onCorrectGuess,
+  onIncorrectGuess,
 }: FlashcardProps) => {
   const [note, setNote] = useState<string | null>(null);
   //random genre to start
@@ -48,16 +48,16 @@ export const Flashcard = ({
   });
 
   const onNote = useCallback(
-    (n) => {
+    (n: string | null) => {
       if (n === note) return;
       setNote(n);
 
       if (n !== flashcard.note) return;
-      if (count > 0) return onSuccess();
+      if (count > 0) return onCorrectGuess();
 
-      onFailure();
+      onIncorrectGuess();
     },
-    [onFailure, onSuccess, count, note, flashcard.note]
+    [onIncorrectGuess, onCorrectGuess, count, note, flashcard.note]
   );
 
   useMicrophoneAudioNote(onNote, 10);
@@ -70,6 +70,7 @@ export const Flashcard = ({
     <>
       {count > 0 && (
         <Card p={6}>
+          <Button onClick={onCorrectGuess}>onCorrectGuess</Button>
           <VStack>
             {genre === "notation" && (
               <Box width={"50vw"}>
@@ -106,7 +107,7 @@ export const Flashcard = ({
               />
             </Box>
             <SoundButton note={flashcard.note} />
-            <Button mt={4} onClick={onFailure}>
+            <Button mt={4} onClick={onIncorrectGuess}>
               Next
             </Button>
           </Card>

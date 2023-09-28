@@ -27,30 +27,16 @@ export const PageStudy = () => {
 };
 
 const Content = () => {
-  const { addPoint, subtractPoint, getNewActiveCard, activeCard, points } =
-    useGameContext();
-  const onSuccess = () => {
-    addPoint();
-    getNewActiveCard();
-  };
-
-  const onFailure = () => {
-    subtractPoint();
-    getNewActiveCard();
-  };
+  const { onIncorrectGuess, onCorrectGuess, activeCard } = useGameContext();
 
   return (
     <>
-      <HStack position={"absolute"} top={0} left={0} p={4}>
-        <Icon as={GiRoundStar} />
-        <Text fontSize="2xl">{points}</Text>
-      </HStack>
       <Center h="100dvh" w="100dvw" bg="gray.100">
         <div key={activeCard.id}>
           <Flashcard
             flashcard={activeCard}
-            onSuccess={onSuccess}
-            onFailure={onFailure}
+            onCorrectGuess={onCorrectGuess}
+            onIncorrectGuess={onIncorrectGuess}
           />
         </div>
       </Center>
