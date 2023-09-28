@@ -62,7 +62,6 @@ export const Flashcard = ({
     <>
       {count > 0 && (
         <Card p={6}>
-          <Button onClick={onCorrectGuess}>onCorrectGuess</Button>
           <VStack>
             {flashcard.genre === "notation" && (
               <Box width={"50vw"}>
