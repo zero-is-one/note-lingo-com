@@ -1,5 +1,6 @@
 {
   "name": "note-lingo-com",
+  "homepage": "https://zero-is-one.github.io/note-lingo-com/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && cp dist/index.html dist/404.html && gh-pages -d dist"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
@@ -21,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.15.0",
+    "react-screen-wake-lock": "^3.0.2",
     "tonal": "^5.0.0",
     "tone": "^14.7.77",
     "usehooks-ts": "^2.9.1",
@@ -36,6 +39,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "gh-pages": "^6.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }

@@ -4,6 +4,7 @@ import { fileURLToPath, URL } from "url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "https://zero-is-one.github.io/note-lingo-com/",
   plugins: [react()],
   resolve: {
     alias: {

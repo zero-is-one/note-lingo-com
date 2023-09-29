@@ -1,7 +1,6 @@
 import { useState, createContext } from "react";
 import { Flashcard } from "@/types";
 import { arrayMove } from "@/utils/array";
-import { FlashcardGenre } from "@/types";
 
 export type GameContextType = {
   activeCard: Flashcard;

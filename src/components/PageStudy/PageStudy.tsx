@@ -73,7 +73,7 @@ const RequestMicrophonePermission = ({
         )}
 
         <HStack>
-          {["sound", "name", "notation"].map((genre) => (
+          {(["sound", "name", "notation"] as FlashcardGenre[]).map((genre) => (
             <Checkbox
               key={genre}
               size={"lg"}

@@ -1,7 +1,6 @@
-import { AbsoluteCenter, VStack, Icon, Button } from "@chakra-ui/react";
+import { AbsoluteCenter, VStack, Button } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { concertinaLayout } from "@/config/layouts/concertina";
-import { CgArrowAlignH, CgArrowsMergeAltH } from "react-icons/cg";
 import { BellowState } from "@/types";
 import { PushPullIcon } from "../PushPullIcon/PushPullIcon";
 

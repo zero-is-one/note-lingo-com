@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { Sampler, SamplerOptions } from "tone";
 type SamplesMap = SamplerOptions["urls"];
 
