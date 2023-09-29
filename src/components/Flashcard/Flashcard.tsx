@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useMicrophoneAudioNote } from "@/hooks/useMicrophoneAudioNote";
+import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
 import { ConcertinaFingerChart } from "../ConcertinaFingerChart/ConcertinaFingerChart";
 import { SingleNote } from "../SingleNote/SingleNote";
 import { Note } from "tonal";
@@ -40,11 +40,11 @@ export const Flashcard = ({
   });
 
   const onNote = useCallback(
-    (n: string | null) => {
-      if (n === note) return;
-      setNote(n);
+    ({ note: detectedNote }: { note: null | string }) => {
+      if (detectedNote === note) return;
+      setNote(detectedNote);
 
-      if (n !== flashcard.note) return;
+      if (detectedNote !== flashcard.note) return;
       if (count > 0) return onCorrectGuess();
 
       onIncorrectGuess();
@@ -52,7 +52,7 @@ export const Flashcard = ({
     [onIncorrectGuess, onCorrectGuess, count, note, flashcard.note]
   );
 
-  useMicrophoneAudioNote(onNote, 10);
+  useDetectMicrophoneNote(onNote);
 
   useEffect(() => {
     startCountdown();

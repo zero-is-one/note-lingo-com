@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { PageStart } from "./components/PageStart/PageStart";
 import { PageStudy } from "./components/PageStudy/PageStudy";
-
+import { PageMicTest } from "./components/PageMicTest/PageMicTest";
 const router = createBrowserRouter(
   [
     {
@@ -12,6 +12,10 @@ const router = createBrowserRouter(
     {
       path: "/study",
       element: <PageStudy />,
+    },
+    {
+      path: "/mic-test",
+      element: <PageMicTest />,
     },
     {
       path: "/*",
