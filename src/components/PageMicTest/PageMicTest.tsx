@@ -17,12 +17,13 @@ export const PageMicTest = () => {
   const [pitch, setPitch] = useState<number | null>(null);
   const [clarity, setClarity] = useState<number | null>(null);
 
-  const onNote = useCallback(({ pitch, clarity }) => {
-    setClarity(clarity);
-    setPitch(pitch);
-  }, []);
+  useMicrophonePitchDetector(
+    useCallback(({ pitch, clarity }) => {
+      setClarity(clarity);
+      setPitch(pitch);
+    }, [])
+  );
 
-  useMicrophonePitchDetector(onNote);
   useDetectMicrophoneNote(({ note }) => {
     setNote(note);
   });

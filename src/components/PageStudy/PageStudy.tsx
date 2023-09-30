@@ -6,7 +6,12 @@ import {
   Alert,
   HStack,
   Checkbox,
+  Box,
+  Icon,
+  Heading,
 } from "@chakra-ui/react";
+import { FaTrophy } from "react-icons/fa";
+import { AiFillStar } from "react-icons/ai";
 import { Flashcard } from "../Flashcard/Flashcard";
 import { GameContextProvider } from "@/contexts/GameContext";
 import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
@@ -38,10 +43,42 @@ export const PageStudy = () => {
 };
 
 const Content = () => {
-  const { onIncorrectGuess, onCorrectGuess, activeCard } = useGameContext();
+  const {
+    onIncorrectGuess,
+    onCorrectGuess,
+    activeCard,
+    totalPoints,
+    streakPoints,
+  } = useGameContext();
 
   return (
     <>
+      <Button
+        leftIcon={<FaTrophy />}
+        colorScheme="teal"
+        left={0}
+        top={0}
+        position={"absolute"}
+        size="lg"
+        p={3}
+        variant="ghost"
+      >
+        {totalPoints}
+      </Button>
+
+      <Button
+        rightIcon={<AiFillStar />}
+        colorScheme="teal"
+        right={0}
+        top={0}
+        position={"absolute"}
+        size="lg"
+        p={3}
+        variant="ghost"
+      >
+        {streakPoints}
+      </Button>
+
       <Center h="100dvh" w="100dvw" bg="gray.100">
         <div key={activeCard.id}>
           <Flashcard
