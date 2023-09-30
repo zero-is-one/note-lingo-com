@@ -14,10 +14,9 @@ import {
   Progress,
 } from "@chakra-ui/react";
 import { Flashcard as FlashcardType } from "@/types";
-
 import { useCountdown } from "usehooks-ts";
-import { PushPullIcon } from "../PushPullIcon/PushPullIcon";
 import { SoundButton } from "./SoundButton";
+import { AlternateClue } from "./AlternateClue";
 
 type FlashcardProps = {
   flashcard: FlashcardType;
@@ -80,7 +79,7 @@ export const Flashcard = ({
                 note={flashcard.note}
               />
             )}
-            <PushPullIcon state={flashcard.bellowState} />
+            <AlternateClue flashcard={flashcard} />
           </VStack>
         </Card>
       )}
