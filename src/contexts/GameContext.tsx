@@ -6,6 +6,7 @@ export type GameContextType = {
   activeCard: Flashcard;
   totalPoints: number;
   streakPoints: number;
+  cardPoints: number;
   onCorrectGuess: () => void;
   onIncorrectGuess: () => void;
 };
@@ -53,7 +54,7 @@ export const GameContextProvider: React.FC<{
     setList((list) => {
       const newList = [...list];
       newList[0] = { ...newList[0], points: newList[0].points + 1 };
-      const jitter = Math.floor(Math.random() * 4);
+      const jitter = Math.floor(Math.random() * 3);
       let desiredList = arrayMove(newList, 0, newList[0].points + jitter);
 
       // if the desired list first card note is the same as the current card note
@@ -74,6 +75,7 @@ export const GameContextProvider: React.FC<{
     <GameContext.Provider
       value={{
         activeCard: list[0].flashcard,
+        cardPoints: list[0].points,
         onCorrectGuess,
         onIncorrectGuess,
         totalPoints,

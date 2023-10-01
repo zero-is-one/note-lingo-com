@@ -61,9 +61,9 @@ export const Flashcard = ({
     <>
       {count > 0 && (
         <motion.div
-          initial={{ y: 40 }}
+          initial={{ y: 60 }}
           animate={{ y: 0 }}
-          exit={{ y: -40 }}
+          exit={{ y: -60 }}
           transition={{ duration: 0.1 }}
         >
           <Card p={6}>

@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FaTrophy } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
+import { TbCardsFilled } from "react-icons/tb";
 import { Flashcard } from "../Flashcard/Flashcard";
 import { GameContextProvider } from "@/contexts/GameContext";
 import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
@@ -45,6 +46,7 @@ const Content = () => {
     onCorrectGuess,
     activeCard,
     totalPoints,
+    cardPoints,
     streakPoints,
   } = useGameContext();
 
@@ -61,6 +63,20 @@ const Content = () => {
         variant="ghost"
       >
         {totalPoints}
+      </Button>
+
+      <Button
+        leftIcon={<TbCardsFilled />}
+        colorScheme="teal"
+        right={"50%"}
+        transform={"translateX(50%)"}
+        top={0}
+        position={"absolute"}
+        size="lg"
+        p={3}
+        variant="ghost"
+      >
+        {cardPoints}
       </Button>
 
       <Button
