@@ -21,6 +21,7 @@ export const ConcertinaFingerChart = ({
           return (
             <div key={i} style={{ gridArea: `a${i + 1}` }}>
               <Button
+                display={"block"}
                 fontSize={"2.3cqw"}
                 height={"100%"}
                 width={"100%"}
