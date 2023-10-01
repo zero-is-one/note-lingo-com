@@ -3,7 +3,7 @@ import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
 import { ConcertinaFingerChart } from "../ConcertinaFingerChart/ConcertinaFingerChart";
 import { SingleNote } from "../SingleNote/SingleNote";
 import { Note } from "tonal";
-
+import { motion } from "framer-motion";
 import {
   Button,
   Card,
@@ -60,28 +60,40 @@ export const Flashcard = ({
   return (
     <>
       {count > 0 && (
-        <Card p={6}>
-          <VStack>
-            {flashcard.genre === "notation" && (
-              <Box width={"50vw"}>
-                <SingleNote note={Note.get(flashcard.note)} />
-              </Box>
-            )}
-            {flashcard.genre === "name" && (
-              <Heading fontSize="15cqw" p={3}>
-                {flashcard.note}
-              </Heading>
-            )}
-            {flashcard.genre === "sound" && (
-              <SoundButton
-                duration="1n"
-                playOnMount={true}
-                note={flashcard.note}
-              />
-            )}
-            <AlternateClue flashcard={flashcard} />
-          </VStack>
-        </Card>
+        <motion.div
+          initial={{ y: 40 }}
+          animate={{ y: 0 }}
+          exit={{ y: -40 }}
+          transition={{ duration: 0.1 }}
+        >
+          <Card p={6}>
+            <VStack>
+              {flashcard.genre === "notation" && (
+                <Box width={"50vw"}>
+                  <SingleNote note={Note.get(flashcard.note)} />
+                </Box>
+              )}
+              {flashcard.genre === "name" && (
+                <Heading
+                  fontSize="15cqw"
+                  p={3}
+                  onDoubleClick={onCorrectGuess}
+                  userSelect={"none"}
+                >
+                  {flashcard.note}
+                </Heading>
+              )}
+              {flashcard.genre === "sound" && (
+                <SoundButton
+                  duration="1n"
+                  playOnMount={true}
+                  note={flashcard.note}
+                />
+              )}
+              <AlternateClue flashcard={flashcard} />
+            </VStack>
+          </Card>
+        </motion.div>
       )}
 
       {count <= 0 && (
