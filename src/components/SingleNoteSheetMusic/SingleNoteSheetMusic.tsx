@@ -3,7 +3,7 @@ import { AbcRenderer } from "@/components/AbcRenderer/AbcRenderer";
 import { Note, AbcNotation } from "tonal";
 type NoteOrNoNote = ReturnType<typeof Note.get>;
 
-export const SingleNote = ({
+export const SingleNoteSheetMusic = ({
   note,
   keySignature,
 }: {

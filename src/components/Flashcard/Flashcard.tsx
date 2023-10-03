@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
 import { ConcertinaFingerChart } from "../ConcertinaFingerChart/ConcertinaFingerChart";
-import { SingleNote } from "../SingleNote/SingleNote";
+import { SingleNoteSheetMusic } from "../SingleNoteSheetMusic/SingleNoteSheetMusic";
 import { Note } from "tonal";
 import { motion } from "framer-motion";
 import {
@@ -70,7 +70,7 @@ export const Flashcard = ({
             <VStack>
               {flashcard.genre === "notation" && (
                 <Box width={"50vw"}>
-                  <SingleNote note={Note.get(flashcard.note)} />
+                  <SingleNoteSheetMusic note={Note.get(flashcard.note)} />
                 </Box>
               )}
               {flashcard.genre === "name" && (
