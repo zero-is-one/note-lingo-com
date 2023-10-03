@@ -44,9 +44,10 @@ export const Flashcard = ({
       if (detectedNote === note) return;
       setNote(detectedNote);
 
-      if (detectedNote !== flashcard.note) return;
-      if (count > 0) return onCorrectGuess();
+      if (detectedNote === null) return;
+      if (Note.midi(detectedNote) !== Note.midi(flashcard.note)) return;
 
+      if (count > 0) return onCorrectGuess();
       onIncorrectGuess();
     },
     [onIncorrectGuess, onCorrectGuess, count, note, flashcard.note]
