@@ -12,6 +12,7 @@ import {
   Box,
   Heading,
   Progress,
+  HStack,
 } from "@chakra-ui/react";
 import { Flashcard as FlashcardType } from "@/types";
 import { useCountdown } from "usehooks-ts";
@@ -99,9 +100,20 @@ export const Flashcard = ({
       {count <= 0 && (
         <VStack>
           <Card width={"90vw"} p={5} display={"flex"} alignItems={"center"}>
-            <Box width={"40%"}>
-              <SingleNote note={Note.get(flashcard.note)} />
-            </Box>
+            <HStack>
+              <Box width={"30vw"}>
+                <SingleNoteSheetMusic note={Note.get(flashcard.note)} />
+              </Box>
+              <Heading
+                fontSize="15cqw"
+                p={3}
+                onDoubleClick={onCorrectGuess}
+                userSelect={"none"}
+              >
+                {flashcard.note}
+              </Heading>
+            </HStack>
+
             <Box width={"100%"}>
               <ConcertinaFingerChart
                 activeButtonIndex={flashcard.buttonIndex}
