@@ -43,7 +43,10 @@ export const GameContextProvider: React.FC<{
 
       const newList = [...list];
       newList[0] = { ...newList[0], points: 0 };
-      return arrayMove(newList, 0, lowestPossibleIndex);
+      return makeNextCardDifferentNote(
+        arrayMove(newList, 0, lowestPossibleIndex),
+        list[0].flashcard.note
+      );
     });
   };
 
@@ -54,21 +57,36 @@ export const GameContextProvider: React.FC<{
     setList((list) => {
       const newList = [...list];
       newList[0] = { ...newList[0], points: newList[0].points + 1 };
-      const jitter = Math.floor(Math.random() * 3);
-      let desiredList = arrayMove(newList, 0, newList[0].points + jitter);
 
-      // if the desired list first card note is the same as the current card note
-      // then find a new card to put in the first position
-      if (desiredList[0].flashcard.note === list[0].flashcard.note) {
-        const nextCardIndex = desiredList.findIndex(
-          (card) => card.flashcard.note !== list[0].flashcard.note
-        );
+      const pointsPositionsMap = [
+        1, 2, 3, 5, 7, 14, 24, 48, 72, 96, 120, 144, 200, 300, 400, 500, 600,
+        700, 800, 900, 1000,
+      ];
 
-        desiredList = arrayMove(desiredList, nextCardIndex, 0);
-      }
+      const desiredList = arrayMove(
+        newList,
+        0,
+        pointsPositionsMap[newList[0].points] || newList.length - 1
+      );
 
-      return desiredList;
+      return makeNextCardDifferentNote(desiredList, list[0].flashcard.note);
     });
+  };
+
+  // if the desired list first card note is the same as the current card note
+  // then find a new card to put in the first position
+  const makeNextCardDifferentNote = (list: ListItem[], note: string) => {
+    list = [...list];
+
+    if (note === list[0].flashcard.note) {
+      const nextCardIndex = list.findIndex(
+        (listItem) => listItem.flashcard.note !== note
+      );
+
+      return arrayMove(list, nextCardIndex, 0);
+    }
+
+    return list;
   };
 
   return (
