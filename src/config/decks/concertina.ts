@@ -23,13 +23,15 @@ const buttonOrder: Array<[number, BellowState]> = [
   // Wing button order
   [4, "pull"],
   [27, "pull"],
+  [21, "pull"],
   [8, "pull"],
+  [5, "push"],
   [27, "push"],
+  [25, "pull"],
   [1, "pull"],
   [26, "push"],
-  [5, "push"],
+
   [2, "push"],
-  [21, "pull"],
   [3, "pull"],
   [2, "pull"],
   [21, "push"],
@@ -48,7 +50,7 @@ const buttonOrder: Array<[number, BellowState]> = [
   [22, "pull"],
   [23, "pull"],
   [24, "push"],
-  [25, "pull"],
+
   [26, "pull"],
   [5, "pull"],
   [6, "pull"],

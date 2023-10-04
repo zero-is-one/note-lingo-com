@@ -33,7 +33,7 @@ export const ConcertinaFingerChart = ({
                 opacity={active ? 1 : 0.6}
                 borderRadius={active ? "sm" : "full"}
               >
-                {active ? button[bellowState] : ""}
+                {active ? button[bellowState] : ""} 
               </Button>
             </div>
           );
