@@ -1,19 +1,26 @@
 import { Flashcard } from "@/types";
-import { concertinaLayout } from "@/config/layouts/concertina";
+import { angloConcertinaCgWheatstoneInstrument } from "@/config/instruments/angloConcertinaCgWheatstone";
+
 import { Heading } from "@chakra-ui/react";
 export const AlternateClue = ({ flashcard }: { flashcard: Flashcard }) => {
   const isMainRow = flashcard.buttonIndex >= 10 && flashcard.buttonIndex <= 19;
   const isFrontRow = flashcard.buttonIndex <= 9;
   //const isBackRow = flashcard.buttonIndex >= 20;
-  const hasConflict = !!concertinaLayout.find(
-    (b, index) =>
-      (b.pull === flashcard.note || b.push === flashcard.note) &&
-      index !== flashcard.buttonIndex
+  const hasNoteConflict = angloConcertinaCgWheatstoneInstrument.buttons.some(
+    (button, index) =>
+      button.behaviors.find(
+        (behavior) =>
+          behavior.note === flashcard.note && index !== flashcard.buttonIndex
+      )
   );
 
-  if (!hasConflict) return <></>;
+  if (!hasNoteConflict) return <></>;
   if (flashcard.note === "G3")
-    return <Heading>{flashcard.bellowState}</Heading>;
+    return (
+      <Heading>
+        {flashcard.action === "pullBellowsButtonPress" ? "Pull" : "Push"}
+      </Heading>
+    );
   if (isMainRow) return <></>;
 
   return (

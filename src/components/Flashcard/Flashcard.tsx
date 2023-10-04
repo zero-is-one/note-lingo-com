@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
-import { ConcertinaFingerChart } from "../ConcertinaFingerChart/ConcertinaFingerChart";
+import { AngloConcertinaCgWheatstoneFingerChart as FingerChart } from "@/components/AngloConcertinaCgWheatstoneFingerChart/AngloConcertinaCgWheatstoneFingerChart";
 import { SingleNoteSheetMusic } from "../SingleNoteSheetMusic/SingleNoteSheetMusic";
 import { Note } from "tonal";
 import { motion } from "framer-motion";
@@ -116,9 +116,9 @@ export const Flashcard = ({
             </HStack>
 
             <Box width={"100%"}>
-              <ConcertinaFingerChart
-                activeButtonIndex={flashcard.buttonIndex}
-                bellowState={flashcard.bellowState}
+              <FingerChart
+                buttonIndex={flashcard.buttonIndex}
+                action={flashcard.action}
               />
             </Box>
             <SoundButton note={flashcard.note} />

@@ -1,101 +1,105 @@
-import { BellowState, Flashcard } from "@/types";
-import { concertinaLayout } from "../layouts/concertina";
+import { InstrumentButtonAction, Flashcard } from "@/types";
+import { angloConcertinaCgWheatstoneInstrument as concertina } from "@/config/instruments/angloConcertinaCgWheatstone";
 
-const buttonOrder: Array<[number, BellowState]> = [
+const buttonOrder: Array<[number, InstrumentButtonAction]> = [
   //Home button order
-  [12, "push"],
-  [14, "pull"],
-  [15, "pull"],
-  [12, "pull"],
-  [13, "push"],
-  [14, "push"],
-  [15, "push"],
-  [11, "pull"],
-  [18, "push"],
-  [13, "pull"],
-  [11, "push"],
-  [16, "pull"],
-  [16, "push"],
-  [17, "pull"],
-  [18, "pull"],
-  [17, "push"],
+  [12, "pushBellowsButtonPress"],
+  [14, "pullBellowsButtonPress"],
+  [15, "pullBellowsButtonPress"],
+  [12, "pullBellowsButtonPress"],
+  [13, "pushBellowsButtonPress"],
+  [14, "pushBellowsButtonPress"],
+  [15, "pushBellowsButtonPress"],
+  [11, "pullBellowsButtonPress"],
+  [18, "pushBellowsButtonPress"],
+  [13, "pullBellowsButtonPress"],
+  [11, "pushBellowsButtonPress"],
+  [16, "pullBellowsButtonPress"],
+  [16, "pushBellowsButtonPress"],
+  [17, "pullBellowsButtonPress"],
+  [18, "pullBellowsButtonPress"],
+  [17, "pushBellowsButtonPress"],
 
   // Wing button order
-  [4, "pull"],
-  [27, "pull"],
-  [21, "pull"],
-  [8, "pull"],
-  [5, "push"],
-  [27, "push"],
-  [25, "pull"],
-  [1, "pull"],
-  [26, "push"],
+  [4, "pullBellowsButtonPress"],
+  [27, "pullBellowsButtonPress"],
+  [21, "pullBellowsButtonPress"],
+  [8, "pullBellowsButtonPress"],
+  [5, "pushBellowsButtonPress"],
+  [27, "pushBellowsButtonPress"],
+  [25, "pullBellowsButtonPress"],
+  [1, "pullBellowsButtonPress"],
+  [26, "pushBellowsButtonPress"],
 
-  [2, "push"],
-  [3, "pull"],
-  [2, "pull"],
-  [21, "push"],
-  [4, "push"],
-  [3, "push"],
-  [25, "push"],
-  [1, "push"],
+  [2, "pushBellowsButtonPress"],
+  [3, "pullBellowsButtonPress"],
+  [2, "pullBellowsButtonPress"],
+  [21, "pushBellowsButtonPress"],
+  [4, "pushBellowsButtonPress"],
+  [3, "pushBellowsButtonPress"],
+  [25, "pushBellowsButtonPress"],
+  [1, "pushBellowsButtonPress"],
 
-  [7, "pull"],
-  [23, "push"],
-  [6, "push"],
-  [24, "pull"],
-  [22, "push"],
-  [7, "push"],
-  [8, "push"],
-  [22, "pull"],
-  [23, "pull"],
-  [24, "push"],
+  [7, "pullBellowsButtonPress"],
+  [23, "pushBellowsButtonPress"],
+  [6, "pushBellowsButtonPress"],
+  [24, "pullBellowsButtonPress"],
+  [22, "pushBellowsButtonPress"],
+  [7, "pushBellowsButtonPress"],
+  [8, "pushBellowsButtonPress"],
+  [22, "pullBellowsButtonPress"],
+  [23, "pullBellowsButtonPress"],
+  [24, "pushBellowsButtonPress"],
 
-  [26, "pull"],
-  [5, "pull"],
-  [6, "pull"],
-  [28, "pull"],
+  [26, "pullBellowsButtonPress"],
+  [5, "pullBellowsButtonPress"],
+  [6, "pullBellowsButtonPress"],
+  [28, "pullBellowsButtonPress"],
 
-  [28, "push"],
+  [28, "pushBellowsButtonPress"],
 
   //Tip Buttons
-  [0, "pull"],
-  [29, "pull"],
-  [10, "push"],
-  [19, "pull"],
-  [10, "pull"],
-  [20, "pull"],
-  [0, "push"],
-  [19, "push"],
-  [20, "push"],
-  [9, "pull"],
-  [9, "push"],
-  [29, "push"],
+  [0, "pullBellowsButtonPress"],
+  [29, "pullBellowsButtonPress"],
+  [10, "pushBellowsButtonPress"],
+  [19, "pullBellowsButtonPress"],
+  [10, "pullBellowsButtonPress"],
+  [20, "pullBellowsButtonPress"],
+  [0, "pushBellowsButtonPress"],
+  [19, "pushBellowsButtonPress"],
+  [20, "pushBellowsButtonPress"],
+  [9, "pullBellowsButtonPress"],
+  [9, "pushBellowsButtonPress"],
+  [29, "pushBellowsButtonPress"],
 ];
 
 const cards: Flashcard[] = [];
 
-buttonOrder.forEach(([buttonIndex, bellowState]) => {
+buttonOrder.forEach(([buttonIndex, action]) => {
+  const note = concertina.buttons[buttonIndex].behaviors.find(
+    (behavior) => behavior.action === action
+  )?.note as string;
+
   const cardProtype = {
     buttonIndex,
-    bellowState,
-    note: concertinaLayout[buttonIndex][bellowState],
+    action,
+    note,
   };
 
   cards.push({
     ...cardProtype,
     genre: "name",
-    id: `${buttonIndex}-${cardProtype.note}-${bellowState}-name`,
+    id: `${buttonIndex}-${cardProtype.note}-${action}-name`,
   });
   cards.push({
     ...cardProtype,
     genre: "notation",
-    id: `${buttonIndex}-${cardProtype.note}-${bellowState}-notation`,
+    id: `${buttonIndex}-${cardProtype.note}-${action}-notation`,
   });
   cards.push({
     ...cardProtype,
     genre: "sound",
-    id: `${buttonIndex}-${cardProtype.note}-${bellowState}-sound`,
+    id: `${buttonIndex}-${cardProtype.note}-${action}-sound`,
   });
 });
 
