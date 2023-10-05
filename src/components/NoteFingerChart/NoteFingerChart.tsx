@@ -1,45 +1,37 @@
 import { angloConcertinaCgWheatstoneInstrument as concertina } from "@/config/instruments/angloConcertinaCgWheatstone";
 import { InstrumentButtonLayout } from "@/components/InstrumentButtonLayout/InstrumentButtonLayout";
-import { InstrumentButtonAction, InstrumentButtonModifer } from "@/types";
+import { InstrumentButtonModifer } from "@/types";
 import { AbsoluteCenter, Box, Icon } from "@chakra-ui/react";
 import { CgArrowAlignH, CgArrowsMergeAltH } from "react-icons/cg";
+import { ButtonInput } from "@/types";
 
-export const AngloConcertinaCgWheatstoneFingerChart = ({
+export const NoteFingerChart = ({
   buttonIndex,
   action,
-}: {
-  buttonIndex: number;
-  action: InstrumentButtonAction;
-}) => {
-  console.log(concertina.buttons[buttonIndex]);
-  concertina.buttons[buttonIndex];
-
+  instrument,
+}: ButtonInput) => {
   const note = concertina.buttons[buttonIndex].behaviors.find(
     (behavior) => behavior.action === action
   )?.note;
 
-  const base = {
+  const color = action === "pullBellowsButtonPress" ? "#FF6700" : "#6234CB";
+
+  const modifer: InstrumentButtonModifer = {
     id: buttonIndex,
     borderRadius: 0,
     label: note,
+    background: color,
   };
-
-  const modifierMap: Record<InstrumentButtonAction, InstrumentButtonModifer> = {
-    pullBellowsButtonPress: { ...base, background: "#FF6700" },
-    pushBellowsButtonPress: { ...base, background: "#6234CB" },
-  };
-
-  const modifer = modifierMap[action];
 
   return (
     <Box position={"relative"}>
       <InstrumentButtonLayout
-        instrument={concertina}
+        instrument={instrument}
         buttonModifiers={[modifer]}
       />
-      <AbsoluteCenter>
+      <AbsoluteCenter bottom={0}>
         <Icon
-          color={modifer.background}
+          color={color}
           boxSize={"12cqw"}
           as={
             action === "pushBellowsButtonPress"

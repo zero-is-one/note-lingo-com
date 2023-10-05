@@ -1,4 +1,4 @@
-import { Instrument } from "@/types";
+import { Instrument, NumberingSystem } from "@/types";
 
 //describe the physical layout of the instrument and functionality of each button
 export const angloConcertinaCgWheatstoneInstrument: Instrument = {
@@ -258,3 +258,12 @@ export const angloConcertinaCgWheatstoneInstrument: Instrument = {
     },
   ],
 };
+
+export const cooverTablatureNumberingSystem: NumberingSystem = [
+  ...["1a", "2a", "3a", "4a", "5a"],
+  ...["1a", "2a", "3a", "4a", "5a"],
+  ...["1", "2", "3", "4", "5"],
+  ...["1", "2", "3", "4", "5"],
+  ...["6", "7", "8", "9", "10"],
+  ...["6", "7", "8", "9", "10"],
+];

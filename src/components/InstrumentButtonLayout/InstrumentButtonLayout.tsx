@@ -55,7 +55,7 @@ export const InstrumentButtonLayout = ({
               justifyContent={"center"}
               alignItems={"center"}
               userSelect={"none"}
-              fontSize={"2.2cqw"}
+              fontSize={modifer?.fontSize || "2.2cqw"}
               fontWeight={"semibold"}
               textShadow={"0 0 2.2cqw #00000068"}
             >

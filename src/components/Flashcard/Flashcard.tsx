@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
-import { AngloConcertinaCgWheatstoneFingerChart as FingerChart } from "@/components/AngloConcertinaCgWheatstoneFingerChart/AngloConcertinaCgWheatstoneFingerChart";
+import { NoteFingerChart } from "@/components/NoteFingerChart/NoteFingerChart";
 import { SingleNoteSheetMusic } from "../SingleNoteSheetMusic/SingleNoteSheetMusic";
 import { Note } from "tonal";
 import { motion } from "framer-motion";
@@ -18,6 +18,7 @@ import { Flashcard as FlashcardType } from "@/types";
 import { useCountdown } from "usehooks-ts";
 import { SoundButton } from "./SoundButton";
 import { AlternateClue } from "./AlternateClue";
+import { angloConcertinaCgWheatstoneInstrument } from "@/config/instruments/angloConcertinaCgWheatstone";
 
 type FlashcardProps = {
   flashcard: FlashcardType;
@@ -116,7 +117,8 @@ export const Flashcard = ({
             </HStack>
 
             <Box width={"100%"}>
-              <FingerChart
+              <NoteFingerChart
+                instrument={angloConcertinaCgWheatstoneInstrument}
                 buttonIndex={flashcard.buttonIndex}
                 action={flashcard.action}
               />

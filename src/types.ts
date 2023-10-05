@@ -7,15 +7,39 @@ export type NoteOrNoNote = Note | NoNote;
 
 export type InstrumentButtonAction =
   | "pushBellowsButtonPress"
-  | "pullBellowsButtonPress";
+  | "pullBellowsButtonPress"
+  | "buttonPress";
 
 export type InstrumentBehavior = {
   action: InstrumentButtonAction;
   note: string;
 };
 
+type Behaviors =
+  | [
+      InstrumentBehavior & {
+        action: "pushBellowsButtonPress";
+      },
+      InstrumentBehavior & {
+        action: "pullBellowsButtonPress";
+      }
+    ]
+  | [
+      InstrumentBehavior & {
+        action: "pullBellowsButtonPress";
+      },
+      InstrumentBehavior & {
+        action: "pushBellowsButtonPress";
+      }
+    ]
+  | [
+      InstrumentBehavior & {
+        action: "buttonPress";
+      }
+    ];
+
 export type InstrumentButton = {
-  behaviors: InstrumentBehavior[];
+  behaviors: Behaviors;
   position: {
     x: number;
     y: number;
@@ -32,11 +56,7 @@ export type InstrumentButtonModifer = {
   color?: string;
   background?: string;
   borderRadius?: number;
-  // size?: number;
-  // position?: {
-  //   x: number;
-  //   y: number;
-  // };
+  fontSize?: string;
 };
 
 export type Instrument = {
@@ -54,3 +74,11 @@ export type Flashcard = {
   action: InstrumentButtonAction;
   genre: FlashcardGenre;
 };
+
+export type ButtonInput = {
+  instrument: Instrument;
+  buttonIndex: number;
+  action: InstrumentButtonAction;
+};
+
+export type NumberingSystem = string[];
