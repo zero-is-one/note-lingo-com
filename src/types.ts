@@ -65,14 +65,16 @@ export type Instrument = {
   buttons: InstrumentButton[];
 };
 
-export type FlashcardGenre = "sound" | "name" | "notation";
-
 export type Flashcard = {
-  id: string;
   note: string;
   buttonIndex: number;
   action: InstrumentButtonAction;
-  genre: FlashcardGenre;
+};
+
+export type Deck = {
+  id: string;
+  name: string;
+  flashcards: Flashcard[];
 };
 
 export type ButtonInput = {

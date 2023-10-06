@@ -1,33 +1,20 @@
-import { useState, createContext } from "react";
-import { Flashcard } from "@/types";
+import { useState } from "react";
+import { Flashcard, Deck } from "@/types";
 import { arrayMove } from "@/utils/array";
-
-export type GameContextType = {
-  activeCard: Flashcard;
-  totalPoints: number;
-  streakPoints: number;
-  cardPoints: number;
-  onCorrectGuess: () => void;
-  onIncorrectGuess: () => void;
-};
-
-export const GameContext = createContext<GameContextType | undefined>(
-  undefined
-);
 
 type ListItem = {
   points: number;
   flashcard: Flashcard;
 };
 
-export const GameContextProvider: React.FC<{
-  deck: Flashcard[];
-  children: React.ReactNode;
-}> = ({ children, deck }) => {
+export type Genre = "sound" | "name" | "notation";
+
+export const useGameState = (deck: Deck) => {
+  const [genre, setGenre] = useState<Genre>("name");
   const [totalPoints, setTotalPoints] = useState(0);
   const [streakPoints, setStreakPoints] = useState(0);
   const [list, setList] = useState<ListItem[]>(
-    deck.map((card) => ({
+    deck.flashcards.map((card) => ({
       points: 0,
       flashcard: card,
     }))
@@ -59,14 +46,17 @@ export const GameContextProvider: React.FC<{
       newList[0] = { ...newList[0], points: newList[0].points + 1 };
 
       const pointsPositionsMap = [
-        1, 2, 3, 5, 7, 14, 24, 48, 72, 96, 120, 144, 200, 300, 400, 500, 600,
-        700, 800, 900, 1000,
+        3, 3, 5, 7, 14, 24, 48, 72, 96, 120, 144, 200, 300, 400, 500, 600, 700,
+        800, 900, 1000,
       ];
+
+      const randomJitter = Math.floor(Math.random() * 2);
 
       const desiredList = arrayMove(
         newList,
         0,
-        pointsPositionsMap[newList[0].points] || newList.length - 1
+        pointsPositionsMap[newList[0].points] + randomJitter ||
+          newList.length - 1
       );
 
       return makeNextCardDifferentNote(desiredList, list[0].flashcard.note);
@@ -89,18 +79,14 @@ export const GameContextProvider: React.FC<{
     return list;
   };
 
-  return (
-    <GameContext.Provider
-      value={{
-        activeCard: list[0].flashcard,
-        cardPoints: list[0].points,
-        onCorrectGuess,
-        onIncorrectGuess,
-        totalPoints,
-        streakPoints,
-      }}
-    >
-      {children}
-    </GameContext.Provider>
-  );
+  return {
+    genre,
+    setGenre,
+    activeCard: list[0].flashcard,
+    cardPoints: list[0].points,
+    onCorrectGuess,
+    onIncorrectGuess,
+    totalPoints,
+    streakPoints,
+  };
 };

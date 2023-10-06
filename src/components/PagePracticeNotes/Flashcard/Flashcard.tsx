@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
 import { NoteFingerChart } from "@/components/NoteFingerChart/NoteFingerChart";
-import { SingleNoteSheetMusic } from "../SingleNoteSheetMusic/SingleNoteSheetMusic";
+import { SingleNoteSheetMusic } from "@/components/SingleNoteSheetMusic/SingleNoteSheetMusic";
 import { Note } from "tonal";
 import { motion } from "framer-motion";
 import {
@@ -19,16 +19,19 @@ import { useCountdown } from "usehooks-ts";
 import { SoundButton } from "./SoundButton";
 import { AlternateClue } from "./AlternateClue";
 import { angloConcertinaCgWheatstoneInstrument } from "@/config/instruments/angloConcertinaCgWheatstone";
+import { Genre } from "../useGameState";
 
 type FlashcardProps = {
   flashcard: FlashcardType;
   onCorrectGuess: () => void;
   onIncorrectGuess: () => void;
+  genre: Genre;
 };
 
 const coutdownSeconds = 3;
 
 export const Flashcard = ({
+  genre,
   flashcard,
   onCorrectGuess,
   onIncorrectGuess,
@@ -71,12 +74,12 @@ export const Flashcard = ({
         >
           <Card p={6}>
             <VStack>
-              {flashcard.genre === "notation" && (
+              {genre === "notation" && (
                 <Box width={"50vw"}>
                   <SingleNoteSheetMusic note={Note.get(flashcard.note)} />
                 </Box>
               )}
-              {flashcard.genre === "name" && (
+              {genre === "name" && (
                 <Heading
                   fontSize="15cqw"
                   p={3}
@@ -86,7 +89,7 @@ export const Flashcard = ({
                   {flashcard.note}
                 </Heading>
               )}
-              {flashcard.genre === "sound" && (
+              {genre === "sound" && (
                 <SoundButton
                   duration="1n"
                   playOnMount={true}
