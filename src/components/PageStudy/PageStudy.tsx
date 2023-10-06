@@ -25,7 +25,7 @@ export const PageStudy = () => {
                 size={"lg"}
                 leftIcon={<HiMusicNote />}
               >
-                Pracice Notes
+                Practice Notes
               </Button>
               <Button
                 to="/study/practice/coover-notation"
@@ -35,7 +35,7 @@ export const PageStudy = () => {
                 size={"lg"}
                 leftIcon={<BsMusicNoteList />}
               >
-                Practive Coover Notation
+                Practice Coover Notation
               </Button>
             </VStack>
           </CardBody>

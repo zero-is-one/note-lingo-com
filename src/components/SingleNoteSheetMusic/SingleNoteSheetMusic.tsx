@@ -7,15 +7,17 @@ export const SingleNoteSheetMusic = ({
   note,
   keySignature,
 }: {
-  note: NoteOrNoNote;
+  note: NoteOrNoNote | string;
   keySignature?: string;
 }) => {
-  if (note.empty) return null;
+  const isNoteaString = typeof note === "string";
+
+  if (!isNoteaString && note?.empty) return null;
 
   const notation = `X: 1
 L:1/4
 K:${keySignature || "C"}
-${AbcNotation.scientificToAbcNotation(note.name)}
+${isNoteaString ? note : AbcNotation.scientificToAbcNotation(note.name)}
 `;
 
   return (
