@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
 import { NoteFingerChart } from "@/components/NoteFingerChart/NoteFingerChart";
 import { SingleNoteSheetMusic } from "@/components/SingleNoteSheetMusic/SingleNoteSheetMusic";
@@ -11,15 +11,16 @@ import {
   Text,
   Box,
   Heading,
-  Progress,
   HStack,
 } from "@chakra-ui/react";
 import { Flashcard as FlashcardType } from "@/types";
-import { useCountdown } from "usehooks-ts";
+
 import { SoundButton } from "./SoundButton";
 import { AlternateClue } from "./AlternateClue";
 import { angloConcertinaCgWheatstoneInstrument } from "@/config/instruments/angloConcertinaCgWheatstone";
 import { Genre } from "../useGameState";
+
+import { CardCountdownTimer } from "@/components/CardCountdownTimer/CardCountdownTimer";
 
 type FlashcardProps = {
   flashcard: FlashcardType;
@@ -28,44 +29,34 @@ type FlashcardProps = {
   genre: Genre;
 };
 
-const coutdownSeconds = 3;
-
 export const Flashcard = ({
   genre,
   flashcard,
   onCorrectGuess,
   onIncorrectGuess,
 }: FlashcardProps) => {
+  const [timerComplete, setTimerComplete] = useState<boolean>(false);
   const [note, setNote] = useState<string | null>(null);
 
-  const [count, { startCountdown }] = useCountdown({
-    countStart: coutdownSeconds,
-    intervalMs: 1000,
-  });
+  useDetectMicrophoneNote(
+    useCallback(
+      ({ note: detectedNote }: { note: null | string }) => {
+        if (detectedNote === note) return;
+        setNote(detectedNote);
 
-  const onNote = useCallback(
-    ({ note: detectedNote }: { note: null | string }) => {
-      if (detectedNote === note) return;
-      setNote(detectedNote);
+        if (detectedNote === null) return;
+        if (Note.midi(detectedNote) !== Note.midi(flashcard.note)) return;
 
-      if (detectedNote === null) return;
-      if (Note.midi(detectedNote) !== Note.midi(flashcard.note)) return;
-
-      if (count > 0) return onCorrectGuess();
-      onIncorrectGuess();
-    },
-    [onIncorrectGuess, onCorrectGuess, count, note, flashcard.note]
+        if (!timerComplete) return onCorrectGuess();
+        onIncorrectGuess();
+      },
+      [onIncorrectGuess, onCorrectGuess, note, flashcard.note, timerComplete]
+    )
   );
-
-  useDetectMicrophoneNote(onNote);
-
-  useEffect(() => {
-    startCountdown();
-  }, []);
 
   return (
     <>
-      {count > 0 && (
+      {!timerComplete && (
         <motion.div
           initial={{ y: 60 }}
           animate={{ y: 0 }}
@@ -102,7 +93,7 @@ export const Flashcard = ({
         </motion.div>
       )}
 
-      {count <= 0 && (
+      {timerComplete && (
         <VStack>
           <Card width={"90vw"} p={5} display={"flex"} alignItems={"center"}>
             <HStack>
@@ -136,19 +127,11 @@ export const Flashcard = ({
         </VStack>
       )}
 
-      <Progress
-        sx={{
-          "& > div:first-of-type": {
-            transitionProperty: "width",
-            transitionDuration: ".2s",
-          },
+      <CardCountdownTimer
+        countStartSeconds={3}
+        onCompleteCallback={() => {
+          setTimerComplete(true);
         }}
-        value={(100 * count) / coutdownSeconds}
-        position={"absolute"}
-        bottom={0}
-        left={0}
-        width={"100vw"}
-        colorScheme="teal"
       />
     </>
   );
