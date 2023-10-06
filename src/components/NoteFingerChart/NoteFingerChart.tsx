@@ -1,6 +1,6 @@
 import { angloConcertinaCgWheatstoneInstrument as concertina } from "@/config/instruments/angloConcertinaCgWheatstone";
 import { InstrumentButtonLayout } from "@/components/InstrumentButtonLayout/InstrumentButtonLayout";
-import { InstrumentButtonModifer } from "@/types";
+import { InstrumentBehavior, InstrumentButtonModifer } from "@/types";
 import { AbsoluteCenter, Box, Icon } from "@chakra-ui/react";
 import { CgArrowAlignH, CgArrowsMergeAltH } from "react-icons/cg";
 import { ButtonInput } from "@/types";
@@ -10,9 +10,9 @@ export const NoteFingerChart = ({
   action,
   instrument,
 }: ButtonInput) => {
-  const note = concertina.buttons[buttonIndex].behaviors.find(
-    (behavior) => behavior.action === action
-  )?.note;
+  const note = (
+    concertina.buttons[buttonIndex].behaviors as InstrumentBehavior[]
+  ).find((behavior) => behavior.action === action)?.note;
 
   const color = action === "pullBellowsButtonPress" ? "#FF6700" : "#6234CB";
 

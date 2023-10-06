@@ -5,6 +5,9 @@ import { Settings } from "./Settings";
 import { Game } from "./Game";
 import { MicrophoneAccessWarning } from "../MicrophoneAccessWarning/MicrophoneAccessWarning";
 import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
+
+console.log({ concertinaDeck });
+
 export const PagePracticeNotes = () => {
   const [isStarted, setIsStarted] = useState(false);
   const gameState = useGameState(concertinaDeck);

@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { PageStart } from "@/components/PageStart/PageStart";
 import { PageStudy } from "@/components/PageStudy/PageStudy";
 import { PageMicTest } from "@/components/PageMicTest/PageMicTest";
 import { PageTest } from "@/components/PageTest/PageTest";

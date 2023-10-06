@@ -1,11 +1,11 @@
-import { Flashcard } from "@/types";
+import { Flashcard, InstrumentBehavior } from "@/types";
 import { angloConcertinaCgWheatstoneInstrument } from "@/config/instruments/angloConcertinaCgWheatstone";
 
 import { Heading } from "@chakra-ui/react";
 export const AlternateClue = ({ flashcard }: { flashcard: Flashcard }) => {
   const hasNoteConflict = angloConcertinaCgWheatstoneInstrument.buttons.some(
     (button, index) =>
-      button.behaviors.find(
+      (button.behaviors as InstrumentBehavior[]).find(
         (behavior) =>
           behavior.note === flashcard.note && index !== flashcard.buttonIndex
       )

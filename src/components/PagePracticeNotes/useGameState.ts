@@ -15,7 +15,7 @@ export const useGameState = (deck: Deck) => {
   const [streakPoints, setStreakPoints] = useState(0);
 
   const [list, setList] = useState<ListItem[]>(() => {
-    const shuffledFlashcards = arrayChunk(deck.flashcards, 6)
+    const shuffledFlashcards = arrayChunk(deck.flashcards, 3)
       .map(arrayShuffle)
       .flat();
     return shuffledFlashcards.map((card) => ({

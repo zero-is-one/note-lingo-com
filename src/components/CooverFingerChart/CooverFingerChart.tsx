@@ -17,7 +17,7 @@ export const CooverFingerChart = ({
   const color = action === "pullBellowsButtonPress" ? "#FF6700" : "#6234CB";
 
   const modifiers: InstrumentButtonModifer[] = instrument.buttons.map(
-    (button, index) => ({
+    (_, index) => ({
       id: index,
       label: numberingSystem[index],
       fontSize: "3cqw",
