@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Flashcard, Deck } from "@/types";
-import { arrayMove } from "@/utils/array";
+import { arrayMove, arrayChunk, arrayShuffle } from "@/utils/array";
 
 type ListItem = {
   points: number;
@@ -13,12 +13,16 @@ export const useGameState = (deck: Deck) => {
   const [genre, setGenre] = useState<Genre>("name");
   const [totalPoints, setTotalPoints] = useState(0);
   const [streakPoints, setStreakPoints] = useState(0);
-  const [list, setList] = useState<ListItem[]>(
-    deck.flashcards.map((card) => ({
+
+  const [list, setList] = useState<ListItem[]>(() => {
+    const shuffledFlashcards = arrayChunk(deck.flashcards, 6)
+      .map(arrayShuffle)
+      .flat();
+    return shuffledFlashcards.map((card) => ({
       points: 0,
       flashcard: card,
-    }))
-  );
+    }));
+  });
 
   const onIncorrectGuess = () => {
     setStreakPoints(0);

@@ -4,7 +4,7 @@ export function arrayMove<T>(arr: T[], fromIndex: number, toIndex: number) {
   return newArr;
 }
 
-export function shuffle<T>(array: T[]): T[] {
+export function arrayShuffle<T>(array: T[]): T[] {
   let currentIndex = array.length,
     randomIndex;
 
@@ -24,7 +24,7 @@ export function shuffle<T>(array: T[]): T[] {
   return array;
 }
 
-export function chunkArray<T>(array: T[], chunkSize: number): T[][] {
+export function arrayChunk<T>(array: T[], chunkSize: number): T[][] {
   const chunks: T[][] = [];
   for (let i = 0; i < array.length; i += chunkSize) {
     chunks.push(array.slice(i, i + chunkSize));
