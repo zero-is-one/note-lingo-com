@@ -21,7 +21,7 @@ export const CooverTablature = ({
       <StyledText opacity={position === "top" ? 1 : 0} marginTop={"8cqw"}>
         {label}
       </StyledText>
-      <SingleNoteSheetMusic note={"|]"} />
+      <SingleNoteSheetMusic note={"z2"} />
       <StyledText opacity={position === "bottom" ? 1 : 0} marginBottom={"5cqw"}>
         {label}
       </StyledText>

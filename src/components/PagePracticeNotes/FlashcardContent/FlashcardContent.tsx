@@ -26,7 +26,7 @@ export const FlashcardContent = ({
       {!timerComplete && (
         <VStack>
           {genre === "notation" && (
-            <Box width={"50vw"}>
+            <Box width={"80vw"}>
               <SingleNoteSheetMusic note={Note.get(flashcard.note)} />
             </Box>
           )}
