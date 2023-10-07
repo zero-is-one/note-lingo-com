@@ -10,17 +10,18 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { useGameState, Genre } from "./useGameState";
+import { GameOptions, Genre } from "./types";
+import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
 
-type GameStateType = ReturnType<typeof useGameState>;
-
-export const Settings = ({
-  gameState,
-  onStart,
+export const StartScreen = ({
+  gameOptions,
+  setGameOptions,
 }: {
-  gameState: GameStateType;
-  onStart: () => void;
+  gameOptions: GameOptions;
+  setGameOptions: (options: GameOptions) => void;
 }) => {
+  const { requestMicrophone } = useMicrophoneContext();
+
   return (
     <Center h="100dvh" w="100dvw" bg="gray.100">
       <Card minWidth={400}>
@@ -30,10 +31,13 @@ export const Settings = ({
               <FormControl>
                 <FormLabel>Card Types</FormLabel>
                 <Select
-                  value={gameState.genre}
+                  value={gameOptions.genre}
                   size="lg"
                   onChange={(e) => {
-                    gameState.setGenre(e.target.value as Genre);
+                    setGameOptions({
+                      ...gameOptions,
+                      genre: e.target.value as Genre,
+                    });
                   }}
                 >
                   {["sound", "name", "notation"].map((value) => (
@@ -49,12 +53,15 @@ export const Settings = ({
                   variant="solid"
                   size={"lg"}
                   w={"100%"}
-                  onClick={() => {
-                    //gameState.reset();
-                    onStart();
+                  onClick={async () => {
+                    await requestMicrophone();
+                    setGameOptions({
+                      ...gameOptions,
+                      startTime: new Date().getTime(),
+                    });
                   }}
                 >
-                  Start
+                  Start Session
                 </Button>
               </Box>
             </Stack>

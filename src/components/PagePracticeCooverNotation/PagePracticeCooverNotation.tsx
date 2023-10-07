@@ -74,8 +74,10 @@ export const PagePracticeCooverNotation = () => {
     getCard();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  console.log(buttonIndex, action);
+
   if (!hasPermission) return <Start />;
-  if (!action || !buttonIndex) return;
+  if (!action || buttonIndex === null) return;
 
   return (
     <>

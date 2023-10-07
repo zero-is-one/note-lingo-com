@@ -1,31 +1,30 @@
 import { useState } from "react";
-import { useGameState } from "./useGameState";
+
 import { deck as concertinaDeck } from "@/config/decks/angloConcertinaCgWheatstone";
-import { Settings } from "./Settings";
+import { StartScreen } from "./StartScreen";
 import { Game } from "./Game";
 import { MicrophoneAccessWarning } from "../MicrophoneAccessWarning/MicrophoneAccessWarning";
-import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
 
-console.log({ concertinaDeck });
+import { GameOptions } from "./types";
 
 export const PagePracticeNotes = () => {
-  const [isStarted, setIsStarted] = useState(false);
-  const gameState = useGameState(concertinaDeck);
-  const { requestMicrophone } = useMicrophoneContext();
+  const [gameOptions, setGameOptions] = useState<GameOptions>({
+    deck: concertinaDeck,
+    startTime: null,
+    genre: "notation",
+  });
 
   return (
     <>
       <MicrophoneAccessWarning />
-      {!isStarted && (
-        <Settings
-          gameState={gameState}
-          onStart={() => {
-            setIsStarted(true);
-            requestMicrophone();
-          }}
+      {!gameOptions.startTime ? (
+        <StartScreen
+          gameOptions={gameOptions}
+          setGameOptions={setGameOptions}
         />
+      ) : (
+        <Game gameOptions={gameOptions} />
       )}
-      {isStarted && <Game gameState={gameState} />}
     </>
   );
 };

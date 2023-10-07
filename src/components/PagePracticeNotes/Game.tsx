@@ -1,23 +1,39 @@
+import { useState } from "react";
 import { Center, Button } from "@chakra-ui/react";
 import { FaTrophy } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { TbCardsFilled } from "react-icons/tb";
 import { Flashcard } from "./Flashcard/Flashcard";
-
 import { AnimatePresence, motion } from "framer-motion";
+import { GameOptions } from "./types";
+import { useSpacedRepetitionFlashcards } from "@/hooks/useSpacedRepetitionFlashcards";
 
-type GameStateType = ReturnType<typeof useGameState>;
-import { useGameState } from "./useGameState";
+export const Game = ({ gameOptions }: { gameOptions: GameOptions }) => {
+  const [totalPoints, setTotalPoints] = useState<number>(0);
+  const [streakPoints, setStreakPoints] = useState<number>(0);
+  const [previousNote, setPreviousNote] = useState<string | null>(null);
 
-export const Game = ({ gameState }: { gameState: GameStateType }) => {
-  const {
-    onIncorrectGuess,
-    onCorrectGuess,
-    activeCard,
-    totalPoints,
-    cardPoints,
-    streakPoints,
-  } = gameState;
+  const { chits, promote, reset } = useSpacedRepetitionFlashcards(
+    gameOptions.deck.flashcards
+  );
+
+  const chitIndex = chits.findIndex(
+    (chit) => chit.flashcard.note !== previousNote
+  );
+  const selectedChit = chits[chitIndex];
+
+  const onCorrectGuess = () => {
+    setTotalPoints(totalPoints + chits[0].points);
+    setStreakPoints(streakPoints + 1);
+    setPreviousNote(selectedChit.flashcard.note);
+    promote(selectedChit.flashcard);
+  };
+
+  const onIncorrectGuess = () => {
+    setStreakPoints(0);
+    setPreviousNote(selectedChit.flashcard.note);
+    reset(selectedChit.flashcard);
+  };
 
   return (
     <>
@@ -45,7 +61,7 @@ export const Game = ({ gameState }: { gameState: GameStateType }) => {
         p={3}
         variant="ghost"
       >
-        {cardPoints}
+        {selectedChit.points}
       </Button>
 
       <Button
@@ -64,7 +80,7 @@ export const Game = ({ gameState }: { gameState: GameStateType }) => {
       <Center h="100dvh" w="100dvw" bg="gray.100" overflow={"hidden"}>
         <AnimatePresence mode="wait">
           <motion.div
-            key={`${activeCard.note}-${activeCard.buttonIndex}-${activeCard.action}`}
+            key={`${selectedChit.flashcard.buttonIndex}-${selectedChit.flashcard.action}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -74,8 +90,8 @@ export const Game = ({ gameState }: { gameState: GameStateType }) => {
             }}
           >
             <Flashcard
-              genre={gameState.genre}
-              flashcard={activeCard}
+              genre={gameOptions.genre}
+              flashcard={selectedChit.flashcard}
               onCorrectGuess={onCorrectGuess}
               onIncorrectGuess={onIncorrectGuess}
             />
