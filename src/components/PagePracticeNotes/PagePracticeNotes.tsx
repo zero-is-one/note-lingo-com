@@ -2,10 +2,11 @@ import { useState } from "react";
 
 import { deck as concertinaDeck } from "@/config/decks/angloConcertinaCgWheatstone";
 import { StartScreen } from "./StartScreen";
-import { Game } from "./Game";
-import { MicrophoneAccessWarning } from "../MicrophoneAccessWarning/MicrophoneAccessWarning";
 
+import { NoteListeningGame } from "@/components/NoteListeningGame/NoteListeningGame";
 import { GameOptions } from "./types";
+import { FlashcardContent } from "./FlashcardContent/FlashcardContent";
+import { deck } from "@/config/decks/angloConcertinaCgWheatstone";
 
 export const PagePracticeNotes = () => {
   const [gameOptions, setGameOptions] = useState<GameOptions>({
@@ -16,14 +17,17 @@ export const PagePracticeNotes = () => {
 
   return (
     <>
-      <MicrophoneAccessWarning />
       {!gameOptions.startTime ? (
         <StartScreen
           gameOptions={gameOptions}
           setGameOptions={setGameOptions}
         />
       ) : (
-        <Game gameOptions={gameOptions} />
+        <NoteListeningGame deck={gameOptions.deck}>
+          {(props) => (
+            <FlashcardContent {...{ ...props, genre: gameOptions.genre }} />
+          )}
+        </NoteListeningGame>
       )}
     </>
   );

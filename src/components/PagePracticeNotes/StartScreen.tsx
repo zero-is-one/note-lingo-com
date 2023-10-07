@@ -24,7 +24,7 @@ export const StartScreen = ({
 
   return (
     <Center h="100dvh" w="100dvw" bg="gray.100">
-      <Card minWidth={400}>
+      <Card minWidth={300}>
         <CardBody>
           <form onSubmit={(e) => e.preventDefault()}>
             <Stack spacing="4">
