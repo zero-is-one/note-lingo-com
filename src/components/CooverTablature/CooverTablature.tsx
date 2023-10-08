@@ -1,6 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
 import { SingleNoteSheetMusic } from "../SingleNoteSheetMusic/SingleNoteSheetMusic";
-import { Note } from "tonal";
 import styled from "@emotion/styled";
 import { InstrumentButtonAction } from "@/types";
 

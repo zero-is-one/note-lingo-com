@@ -1,8 +1,4 @@
-import { useState } from "react";
-import { Box, HStack, Heading, Button } from "@chakra-ui/react";
-
-import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
-import { Start } from "./Start";
+import { Box, HStack, Heading } from "@chakra-ui/react";
 import {
   angloConcertinaCgWheatstoneInstrument as concertina,
   cooverTablatureNumberingSystem,
@@ -10,12 +6,11 @@ import {
 import { CooverFingerChart } from "@/components/CooverFingerChart/CooverFingerChart";
 import { CooverTablature } from "../CooverTablature/CooverTablature";
 import { Flashcard } from "@/types";
-import { InstrumentButtonAction } from "@/types";
 
 export const FlashcardContent = ({
   timerComplete,
   flashcard,
-  onCorrectGuess,
+
   onIncorrectGuess,
 }: {
   flashcard: Flashcard;
