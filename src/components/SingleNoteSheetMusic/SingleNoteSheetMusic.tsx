@@ -1,23 +1,39 @@
 import { AbcRenderer } from "@/components/AbcRenderer/AbcRenderer";
-
-import { Note, AbcNotation } from "tonal";
+import { scientificToABCKeySignature } from "@/utils/abc";
+import { Note, Key } from "tonal";
 type NoteOrNoNote = ReturnType<typeof Note.get>;
 
 export const SingleNoteSheetMusic = ({
   note,
   keySignature,
+  isMinor,
+  isMelodic,
 }: {
   note: NoteOrNoNote | string;
   keySignature?: string;
+  isMinor?: boolean;
+  isMelodic?: boolean;
 }) => {
   const isNoteaString = typeof note === "string";
 
   if (!isNoteaString && note?.empty) return null;
 
+  const keyObj = !isMinor
+    ? Key.majorKey(keySignature || "C")
+    : Key.minorKey(keySignature || "C");
+
+  const alteration = Math.abs(keyObj.alteration);
+  const staffwidth = 90 + (alteration - 1) * 10;
+  console.log({ staffwidth, alteration });
+
   const notation = `X: 1
 L:1/4
 K:${keySignature || "C"}
-${isNoteaString ? note : AbcNotation.scientificToAbcNotation(note.name)}
+${
+  isNoteaString
+    ? note
+    : scientificToABCKeySignature(note.name, keySignature, isMinor, isMelodic)
+}
 `;
 
   return (
@@ -26,7 +42,7 @@ ${isNoteaString ? note : AbcNotation.scientificToAbcNotation(note.name)}
       params={{
         selectTypes: [],
         scale: 1,
-        staffwidth: 80,
+        staffwidth,
         responsive: "resize",
         paddingtop: 0,
         paddingbottom: 3,

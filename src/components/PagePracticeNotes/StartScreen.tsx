@@ -47,6 +47,29 @@ export const StartScreen = ({
                   ))}
                 </Select>
               </FormControl>
+              {gameOptions.genre === "notation" && (
+                <FormControl>
+                  <FormLabel>Key Signature</FormLabel>
+                  <Select
+                    value={gameOptions.keySignature}
+                    size="lg"
+                    onChange={(e) => {
+                      setGameOptions({
+                        ...gameOptions,
+                        keySignature: e.target.value as Genre,
+                      });
+                    }}
+                  >
+                    {["C", "G", "D", "A", "E", "F", "Bb", "Eb", "Ab"].map(
+                      (value) => (
+                        <option key={value} value={value}>
+                          {value.replace("b", "♭").replace("#", "♯")} Major
+                        </option>
+                      )
+                    )}
+                  </Select>
+                </FormControl>
+              )}
               <Box>
                 <Button
                   colorScheme="purple"

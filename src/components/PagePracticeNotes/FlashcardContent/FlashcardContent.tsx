@@ -14,12 +14,14 @@ export const FlashcardContent = ({
   flashcard,
   onCorrectGuess,
   onIncorrectGuess,
+  keySignature,
 }: {
   flashcard: FlashcardType;
   onCorrectGuess: () => void;
   onIncorrectGuess: () => void;
   genre: Genre;
   timerComplete: boolean;
+  keySignature?: string;
 }) => {
   return (
     <Box w="85vw">
@@ -27,7 +29,10 @@ export const FlashcardContent = ({
         <VStack>
           {genre === "notation" && (
             <Box width={"80vw"}>
-              <SingleNoteSheetMusic note={Note.get(flashcard.note)} />
+              <SingleNoteSheetMusic
+                note={Note.get(flashcard.note)}
+                keySignature={keySignature}
+              />
             </Box>
           )}
           {genre === "name" && (
@@ -55,7 +60,10 @@ export const FlashcardContent = ({
         <VStack>
           <HStack>
             <Box width={"30vw"}>
-              <SingleNoteSheetMusic note={Note.get(flashcard.note)} />
+              <SingleNoteSheetMusic
+                note={Note.get(flashcard.note)}
+                keySignature={keySignature}
+              />
             </Box>
             <Heading
               fontSize="15cqw"

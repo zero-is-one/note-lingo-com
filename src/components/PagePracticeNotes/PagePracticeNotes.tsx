@@ -10,6 +10,7 @@ export const PagePracticeNotes = () => {
     deck: concertinaDeck,
     startTime: null,
     genre: "notation",
+    keySignature: "C",
   });
 
   return (
@@ -22,7 +23,13 @@ export const PagePracticeNotes = () => {
       ) : (
         <NoteListeningGame deck={gameOptions.deck}>
           {(props) => (
-            <FlashcardContent {...{ ...props, genre: gameOptions.genre }} />
+            <FlashcardContent
+              {...{
+                ...props,
+                genre: gameOptions.genre,
+                keySignature: gameOptions.keySignature,
+              }}
+            />
           )}
         </NoteListeningGame>
       )}

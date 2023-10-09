@@ -6,4 +6,5 @@ export type GameOptions = {
   genre: Genre;
   deck: Deck;
   startTime: number | null;
+  keySignature?: string | undefined;
 };
