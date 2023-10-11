@@ -2,7 +2,7 @@ import { NoteFingerChart } from "@/components/NoteFingerChart/NoteFingerChart";
 import { SingleNoteSheetMusic } from "@/components/SingleNoteSheetMusic/SingleNoteSheetMusic";
 import { Note } from "tonal";
 import { Genre } from "../types";
-import { Button, VStack, Box, Heading, HStack } from "@chakra-ui/react";
+import { Button, VStack, Box, Heading, HStack, Alert } from "@chakra-ui/react";
 import { Flashcard as FlashcardType } from "@/types";
 import { SoundButton } from "./SoundButton";
 import { AlternateClue } from "./AlternateClue";
@@ -23,14 +23,20 @@ export const FlashcardContent = ({
   timerComplete: boolean;
   keySignature?: string;
 }) => {
+  const note = Note.get(flashcard.note);
+
   return (
     <Box w="85vw">
-      {!timerComplete && (
+      {note.empty && (
+        <Alert>Something went wrong. Do not recognize '{flashcard.note}'</Alert>
+      )}
+      {!timerComplete && !note.empty && (
         <VStack>
           {genre === "notation" && (
             <Box width={"80vw"}>
               <SingleNoteSheetMusic
-                note={Note.get(flashcard.note)}
+                clef={note.midi! > 53 ? "treble" : "bass"} //Any note above F3 is treble clef
+                note={note}
                 keySignature={keySignature}
               />
             </Box>
@@ -61,8 +67,9 @@ export const FlashcardContent = ({
           <HStack>
             <Box width={"30vw"}>
               <SingleNoteSheetMusic
-                note={Note.get(flashcard.note)}
+                note={note}
                 keySignature={keySignature}
+                clef={note.midi! > 53 ? "treble" : "bass"}
               />
             </Box>
             <Heading

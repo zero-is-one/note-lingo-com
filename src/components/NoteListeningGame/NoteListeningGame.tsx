@@ -86,6 +86,7 @@ export const NoteListeningGame = ({
         size="lg"
         p={3}
         variant="ghost"
+        onDoubleClick={onCorrectGuess}
       >
         {seenCardCount}
       </Button>

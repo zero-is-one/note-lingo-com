@@ -32,6 +32,7 @@ export function scientificToABCKeySignature(
 
   if (scaleNote.acc == note.acc) modifier = "";
 
+  // Could make this shorter, but I think this is more readable
   if (scaleNote.acc == "#" && note.acc == "") modifier = "=";
   if (scaleNote.acc == "#" && note.acc == "b") modifier = "_";
 
@@ -40,8 +41,6 @@ export function scientificToABCKeySignature(
 
   if (scaleNote.acc == "" && note.acc == "b") modifier = "_";
   if (scaleNote.acc == "" && note.acc == "#") modifier = "^";
-
-  console.log({ keySignature, note, scaleNote, abcNote, modifier });
 
   return `${modifier}${abcNote}`;
 }

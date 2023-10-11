@@ -5,11 +5,13 @@ type NoteOrNoNote = ReturnType<typeof Note.get>;
 
 export const SingleNoteSheetMusic = ({
   note,
+  clef,
   keySignature,
   isMinor,
   isMelodic,
 }: {
   note: NoteOrNoNote | string;
+  clef?: "treble" | "bass" | "alto" | "tenor";
   keySignature?: string;
   isMinor?: boolean;
   isMelodic?: boolean;
@@ -24,11 +26,10 @@ export const SingleNoteSheetMusic = ({
 
   const alteration = Math.abs(keyObj.alteration);
   const staffwidth = 90 + (alteration - 1) * 10;
-  console.log({ staffwidth, alteration });
 
   const notation = `X: 1
 L:1/4
-K:${keySignature || "C"}
+K:${keySignature || "C"} clef=${clef || "treble"}
 ${
   isNoteaString
     ? note
