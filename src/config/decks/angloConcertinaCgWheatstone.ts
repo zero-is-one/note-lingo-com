@@ -22,6 +22,7 @@ const flashcards: Flashcard[] = [
   {note:"G5",buttonIndex:17, action:"pushBellowsButtonPress"},
   {note:"A5",buttonIndex:18, action:"pullBellowsButtonPress"},
   {note:"B3",buttonIndex:11, action:"pullBellowsButtonPress"},
+  {note:"G#4",buttonIndex:4, action:"pushBellowsButtonPress"},
   {note:"C#5",buttonIndex:5, action:"pushBellowsButtonPress"},
   {note:"A3",buttonIndex:20, action:"pullBellowsButtonPress"},
   {note:"F#5",buttonIndex:25, action:"pullBellowsButtonPress"},
@@ -54,7 +55,7 @@ const flashcards: Flashcard[] = [
   {note:"F#6",buttonIndex:29, action:"pullBellowsButtonPress"},
   {note:"D5",buttonIndex:24, action:"pushBellowsButtonPress"},
   {note:"Db4",buttonIndex:2, action:"pushBellowsButtonPress"},
-  {note:"G#4",buttonIndex:4, action:"pushBellowsButtonPress"},
+  
   {note:"G4",buttonIndex:3, action:"pullBellowsButtonPress"},
   
   {note:"A#3",buttonIndex:1, action:"pullBellowsButtonPress"},
