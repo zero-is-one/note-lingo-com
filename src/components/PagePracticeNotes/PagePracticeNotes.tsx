@@ -5,6 +5,8 @@ import { NoteListeningGame } from "@/components/NoteListeningGame/NoteListeningG
 import { GameOptions } from "./types";
 import { FlashcardContent } from "./FlashcardContent/FlashcardContent";
 
+import { SampleSynthProvider } from "@/contexts/SampleSynthContext";
+
 export const PagePracticeNotes = () => {
   const [gameOptions, setGameOptions] = useState<GameOptions>({
     deck: concertinaDeck,
@@ -14,7 +16,7 @@ export const PagePracticeNotes = () => {
   });
 
   return (
-    <>
+    <SampleSynthProvider>
       {!gameOptions.startTime ? (
         <StartScreen
           gameOptions={gameOptions}
@@ -33,6 +35,6 @@ export const PagePracticeNotes = () => {
           )}
         </NoteListeningGame>
       )}
-    </>
+    </SampleSynthProvider>
   );
 };

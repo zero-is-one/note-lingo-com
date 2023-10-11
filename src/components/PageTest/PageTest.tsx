@@ -5,11 +5,16 @@ import {
   cooverTablatureNumberingSystem,
 } from "@/config/instruments/angloConcertinaCgWheatstone";
 
+import { SingleNoteSheetMusic } from "../SingleNoteSheetMusic/SingleNoteSheetMusic";
+
+import { Note } from "tonal";
+
 export const PageTest = () => {
   return (
     <div>
-      <div style={{ width: "80vw", padding: 5 }}>
-        <CooverTablature
+      <div style={{ width: "40vw", padding: 5 }}>
+        <SingleNoteSheetMusic note={Note.get("C3")} />
+        {/* <CooverTablature
           label="3"
           position="bottom"
           action="pushBellowsButtonPress"
@@ -19,7 +24,7 @@ export const PageTest = () => {
           numberingSystem={cooverTablatureNumberingSystem}
           buttonIndex={5}
           action={"pushBellowsButtonPress"}
-        />
+        /> */}
       </div>
     </div>
   );

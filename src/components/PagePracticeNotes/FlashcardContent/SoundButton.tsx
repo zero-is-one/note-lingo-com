@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-import { useConcertinaSamplerSynthsizer } from "@/hooks/useConcertinaSamplerSynthsizer";
+import { useConcertinaSamplerSynth } from "@/hooks/useConcertinaSamplerSynth";
 import { Button } from "@chakra-ui/react";
 
 export const SoundButton = ({
@@ -14,19 +14,34 @@ export const SoundButton = ({
 }) => {
   const hasPlayedOnMount = useRef(false);
 
-  const { synth, isReady } = useConcertinaSamplerSynthsizer();
+  const { synth } = useConcertinaSamplerSynth();
 
   useEffect(() => {
-    if (!playOnMount || hasPlayedOnMount.current) return;
-    if (!isReady) return;
+    if (!playOnMount) return;
+    if (!synth) return;
 
+    console.log("1", synth);
     synth.triggerAttackRelease(note, duration || "4n");
-  }, [isReady]);
+
+    // setTimeout(() => {
+    //   console.log("2", synth);
+    //   synth.triggerAttackRelease("G5", duration || "4n");
+    // }, 1000);
+
+    return () => {
+      console.log("release", synth);
+      synth.releaseAll();
+    };
+  }, []);
 
   return (
     <Button
       onClick={() => {
-        synth.triggerAttackRelease(note, duration || "4n");
+        synth?.triggerAttackRelease("C4", duration || "4n");
+        setTimeout(() => {
+          synth?.releaseAll();
+          synth?.triggerAttackRelease("G4", duration || "4n");
+        }, 100);
       }}
     >
       Play
