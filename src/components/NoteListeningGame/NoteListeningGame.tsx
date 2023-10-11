@@ -1,6 +1,6 @@
 import { useState, ReactNode } from "react";
 import { Center, Button, Card, CardBody, VStack } from "@chakra-ui/react";
-import { FaTrophy } from "react-icons/fa";
+import { RiShieldStarFill } from "react-icons/ri";
 import { AiFillStar } from "react-icons/ai";
 import { TbCardsFilled } from "react-icons/tb";
 import { CardCountdownTimer } from "../CardCountdownTimer/CardCountdownTimer";
@@ -30,7 +30,7 @@ export const NoteListeningGame = ({
   }) => ReactNode;
 }) => {
   const [detectedNote, setDetectedNote] = useState<string | null>(null);
-  const [totalPoints, setTotalPoints] = useState<number>(0);
+  const [seenCardCount, setSeenCardCount] = useState<number>(0);
   const [streakPoints, setStreakPoints] = useState<number>(0);
   const [previousNote, setPreviousNote] = useState<string | null>(null);
   const [timerComplete, setTimerComplete] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export const NoteListeningGame = ({
   const selectedChit = chits[chitIndex];
 
   const onCorrectGuess = () => {
-    setTotalPoints(totalPoints + chits[0].points);
+    setSeenCardCount(seenCardCount + 1);
     setStreakPoints(streakPoints + 1);
     setPreviousNote(selectedChit.flashcard.note);
     setTimerComplete(false);
@@ -55,6 +55,7 @@ export const NoteListeningGame = ({
   };
 
   const onIncorrectGuess = () => {
+    setSeenCardCount(seenCardCount + 1);
     setStreakPoints(0);
     setPreviousNote(selectedChit.flashcard.note);
     setTimerComplete(false);
@@ -77,7 +78,7 @@ export const NoteListeningGame = ({
   return (
     <>
       <Button
-        leftIcon={<FaTrophy />}
+        leftIcon={<TbCardsFilled />}
         colorScheme="teal"
         left={0}
         top={0}
@@ -86,11 +87,11 @@ export const NoteListeningGame = ({
         p={3}
         variant="ghost"
       >
-        {totalPoints}
+        {seenCardCount}
       </Button>
 
       <Button
-        leftIcon={<TbCardsFilled />}
+        leftIcon={<RiShieldStarFill />}
         colorScheme="teal"
         right={"50%"}
         transform={"translateX(50%)"}
