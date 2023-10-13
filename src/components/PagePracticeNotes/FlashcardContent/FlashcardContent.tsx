@@ -52,11 +52,7 @@ export const FlashcardContent = ({
             </Heading>
           )}
           {genre === "sound" && (
-            <SoundButton
-              duration="1n"
-              playOnMount={true}
-              note={flashcard.note}
-            />
+            <SoundButton playOnMount={true} note={flashcard.note} />
           )}
           <AlternateClue flashcard={flashcard} />
         </VStack>

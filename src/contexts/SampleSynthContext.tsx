@@ -1,4 +1,4 @@
-import { useState, createContext, useRef } from "react";
+import { createContext, useRef } from "react";
 import { Sampler, SamplerOptions } from "tone";
 export type SamplesMap = SamplerOptions["urls"];
 
@@ -28,6 +28,7 @@ export const SampleSynthProvider: React.FC<{
     const sampler = new Sampler(
       samples,
       () => {
+        console.log("Synth loaded", sampler);
         synths.current = new Map(synths.current.set(id, sampler));
       },
       baseUrl

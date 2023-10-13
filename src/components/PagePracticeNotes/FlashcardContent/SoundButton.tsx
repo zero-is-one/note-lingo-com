@@ -1,47 +1,47 @@
-import { useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useConcertinaSamplerSynth } from "@/hooks/useConcertinaSamplerSynth";
 import { Button } from "@chakra-ui/react";
 
 export const SoundButton = ({
   note,
-  duration,
+  durationMs,
   playOnMount,
 }: {
   note: string;
-  duration?: string;
+  durationMs?: number;
   playOnMount?: boolean;
 }) => {
-  const hasPlayedOnMount = useRef(false);
+  const [playCount, setPlayCount] = useState(0);
 
   const { synth } = useConcertinaSamplerSynth();
 
   useEffect(() => {
-    if (!playOnMount) return;
-    if (!synth) return;
+    if (!playOnMount && playCount === 0) return;
+    if (!synth) {
+      setTimeout(() => {
+        console.log("waiting for synth");
+        setPlayCount((count) => count + 1);
+      }, 100);
+      return;
+    }
 
-    console.log("1", synth);
-    synth.triggerAttackRelease(note, duration || "4n");
+    synth.triggerAttack(note);
 
-    // setTimeout(() => {
-    //   console.log("2", synth);
-    //   synth.triggerAttackRelease("G5", duration || "4n");
-    // }, 1000);
+    const timer = setTimeout(() => {
+      synth.releaseAll();
+    }, durationMs || 1000);
 
     return () => {
-      console.log("release", synth);
+      clearTimeout(timer);
       synth.releaseAll();
     };
-  }, []);
+  }, [playCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Button
       onClick={() => {
-        synth?.triggerAttackRelease("C4", duration || "4n");
-        setTimeout(() => {
-          synth?.releaseAll();
-          synth?.triggerAttackRelease("G4", duration || "4n");
-        }, 100);
+        setPlayCount(playCount + 1);
       }}
     >
       Play
