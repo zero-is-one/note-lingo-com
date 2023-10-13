@@ -4,8 +4,9 @@ import { PageStudy } from "@/components/PageStudy/PageStudy";
 import { PageMicTest } from "@/components/PageMicTest/PageMicTest";
 import { PageTest } from "@/components/PageTest/PageTest";
 import { PagePracticeCooverNotation } from "@/components/PagePracticeCooverNotation/PagePracticeCooverNotation";
-import { PagePracticeNotes } from "@/components/PagePracticeNotes/PagePracticeNotes";
 import { PagePracticeSound } from "@/components/PagePracticeSound/PagePracticeSound";
+import { PagePracticeNoteName } from "./components/PagePracticeNoteName/PagePracticeNoteName";
+import { PagePracticeSheetNotation } from "./components/PagePracticeSheetNotation/PagePracticeSheetNotation";
 
 const router = createBrowserRouter(
   [
@@ -18,12 +19,16 @@ const router = createBrowserRouter(
       element: <PageStudy />,
     },
     {
-      path: "/study/practice/note",
-      element: <PagePracticeNotes />,
-    },
-    {
       path: "/study/practice/sound",
       element: <PagePracticeSound />,
+    },
+    {
+      path: "/study/practice/sheet-notation",
+      element: <PagePracticeSheetNotation />,
+    },
+    {
+      path: "/study/practice/note-name",
+      element: <PagePracticeNoteName />,
     },
     {
       path: "/study/practice/coover-notation",
