@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { BsMusicNote } from "react-icons/bs";
+import { PiMicrophoneStageFill } from "react-icons/pi";
 import { useMicrophoneContext } from "@/hooks/useMicrophoneContext";
 import { Text } from "@chakra-ui/react";
 
@@ -11,11 +11,12 @@ export const DetectedNoteIcon = ({ note }: { note: string | null }) => {
 
   return (
     <Button
-      leftIcon={!note ? <BsMusicNote /> : undefined}
+      leftIcon={!note ? <PiMicrophoneStageFill /> : undefined}
       colorScheme="teal"
       variant="ghost"
       size="lg"
-      fontSize={"4cqw"}
+      fontSize={"7cqw"}
+      mt={4}
     >
       {note}
     </Button>

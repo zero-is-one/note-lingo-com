@@ -131,7 +131,7 @@ export const NoteListeningGame = ({
                 duration: 0.1,
               }}
             >
-              <Card>
+              <Card w={"calc(100vw - 32px)"}>
                 <CardBody>
                   {children({
                     onCorrectGuess,

@@ -24,7 +24,7 @@ export const NoteFingerChart = ({
   };
 
   return (
-    <Box position={"relative"}>
+    <Box style={{ containerType: "inline-size" }} position={"relative"}>
       <InstrumentButtonLayout
         instrument={instrument}
         buttonModifiers={[modifer]}
@@ -32,7 +32,8 @@ export const NoteFingerChart = ({
       <AbsoluteCenter bottom={0}>
         <Icon
           color={color}
-          boxSize={"12cqw"}
+          boxSize={"16cqw"}
+          marginTop={"4cqw"}
           as={
             action === "pushBellowsButtonPress"
               ? CgArrowsMergeAltH

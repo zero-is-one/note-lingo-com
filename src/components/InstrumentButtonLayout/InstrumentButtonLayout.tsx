@@ -19,7 +19,6 @@ export const InstrumentButtonLayout = ({
       style={{
         width: "100%",
         position: "relative",
-        containerType: "inline-size",
         aspectRatio: unitWidth / unitHeight,
       }}
     >

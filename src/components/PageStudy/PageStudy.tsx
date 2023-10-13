@@ -6,6 +6,7 @@ import {
   Button,
   VStack,
 } from "@chakra-ui/react";
+import { AiFillSound } from "react-icons/ai";
 import { HiMusicNote } from "react-icons/hi";
 import { BsMusicNoteList } from "react-icons/bs";
 import { Link as ReactRouterLink } from "react-router-dom";
@@ -17,6 +18,16 @@ export const PageStudy = () => {
         <Card minWidth={400}>
           <CardBody>
             <VStack>
+              <Button
+                to="/study/practice/sound"
+                colorScheme="blue"
+                as={ReactRouterLink}
+                w={"100%"}
+                size={"lg"}
+                leftIcon={<AiFillSound />}
+              >
+                Practice Sounds
+              </Button>
               <Button
                 to="/study/practice/note"
                 colorScheme="orange"
