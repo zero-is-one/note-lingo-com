@@ -21,9 +21,8 @@ export const FlashcardContent = ({
   const action = flashcard.action;
   const desiredNote = flashcard.note;
   const buttonIndex = flashcard.buttonIndex;
-  const isLeftHandButton: boolean = buttonIndex
-    ? concertina.buttons[buttonIndex].position.x <= 5
-    : false;
+  const isLeftHandButton: boolean =
+    concertina.buttons[buttonIndex].position.x <= 5;
 
   return (
     <>
