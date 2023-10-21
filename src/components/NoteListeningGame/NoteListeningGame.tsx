@@ -1,14 +1,12 @@
 import { useState, ReactNode } from "react";
-import { Center, Button, Card, CardBody, VStack } from "@chakra-ui/react";
-import { RiShieldStarFill } from "react-icons/ri";
-import { AiFillStar } from "react-icons/ai";
+import { Center, Card, CardBody, VStack, HStack } from "@chakra-ui/react";
+import { ImBinoculars } from "react-icons/im";
 import { TbCardsFilled } from "react-icons/tb";
 import { CardCountdownTimer } from "../CardCountdownTimer/CardCountdownTimer";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDetectMicrophoneNote } from "@/hooks/useDetectMicrophoneNote";
 import { useSpacedRepetitionFlashcards } from "@/hooks/useSpacedRepetitionFlashcards";
 import { Note } from "tonal";
-
 import { DetectedNoteIcon } from "./DetectedNoteIcon";
 import { Deck, Flashcard } from "@/types";
 
@@ -30,8 +28,10 @@ export const NoteListeningGame = ({
   }) => ReactNode;
 }) => {
   const [detectedNote, setDetectedNote] = useState<string | null>(null);
-  const [seenCardCount, setSeenCardCount] = useState<number>(0);
-  const [streakPoints, setStreakPoints] = useState<number>(0);
+  const [totalSeenCardCount, setTotalSeenCardCount] = useState<number>(0);
+  const [totalUniqueCardIdsSeen, setTotalUniqueCardIdsSeen] = useState<
+    Set<string>
+  >(new Set());
   const [previousNote, setPreviousNote] = useState<string | null>(null);
   const [timerComplete, setTimerComplete] = useState<boolean>(false);
 
@@ -41,22 +41,23 @@ export const NoteListeningGame = ({
     reset: resetChit,
   } = useSpacedRepetitionFlashcards(deck.flashcards);
 
-  const chitIndex = chits.findIndex(
+  const selecteChitIndex = chits.findIndex(
     (chit) => chit.flashcard.note !== previousNote
   );
-  const selectedChit = chits[chitIndex];
+  const selectedChit = chits[selecteChitIndex];
+  const flashcardId = `${selectedChit.flashcard.buttonIndex}-${selectedChit.flashcard.action}-${selectedChit.flashcard.note}`;
 
   const onCorrectGuess = () => {
-    setSeenCardCount(seenCardCount + 1);
-    setStreakPoints(streakPoints + 1);
+    setTotalSeenCardCount(totalSeenCardCount + 1);
+    setTotalUniqueCardIdsSeen(totalUniqueCardIdsSeen.add(flashcardId));
     setPreviousNote(selectedChit.flashcard.note);
     setTimerComplete(false);
     promoteChit(selectedChit.flashcard);
   };
 
   const onIncorrectGuess = () => {
-    setSeenCardCount(seenCardCount + 1);
-    setStreakPoints(0);
+    setTotalSeenCardCount(totalSeenCardCount + 1);
+
     setPreviousNote(selectedChit.flashcard.note);
     setTimerComplete(false);
     resetChit(selectedChit.flashcard);
@@ -73,50 +74,30 @@ export const NoteListeningGame = ({
     onIncorrectGuess();
   });
 
-  const flashcardId = `${selectedChit.flashcard.buttonIndex}-${selectedChit.flashcard.action}`;
-
   return (
     <>
-      <Button
-        leftIcon={<TbCardsFilled />}
-        colorScheme="teal"
+      <HStack
+        position={"absolute"}
         left={0}
-        top={0}
-        position={"absolute"}
-        size="lg"
-        p={3}
-        variant="ghost"
-        onDoubleClick={onCorrectGuess}
+        bottom={0}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        width={"100%"}
+        pb={1}
       >
-        {seenCardCount}
-      </Button>
+        <HStack p={4} onDoubleClick={onCorrectGuess}>
+          <ImBinoculars size={16} />
+          <span>{totalSeenCardCount}</span>
+        </HStack>
 
-      <Button
-        leftIcon={<RiShieldStarFill />}
-        colorScheme="teal"
-        right={"50%"}
-        transform={"translateX(50%)"}
-        top={0}
-        position={"absolute"}
-        size="lg"
-        p={3}
-        variant="ghost"
-      >
-        {selectedChit.points}
-      </Button>
+        <HStack p={4} width={140} justifyContent={"center"}>
+          <span>{totalUniqueCardIdsSeen.size}</span>
+          <TbCardsFilled size={20} />
+          <span>{deck.flashcards.length}</span>
+        </HStack>
 
-      <Button
-        rightIcon={<AiFillStar />}
-        colorScheme="teal"
-        right={0}
-        top={0}
-        position={"absolute"}
-        size="lg"
-        p={3}
-        variant="ghost"
-      >
-        {streakPoints}
-      </Button>
+        <DetectedNoteIcon note={detectedNote} />
+      </HStack>
 
       <Center h="100dvh" w="100dvw" bg="gray.100" overflow={"hidden"}>
         <VStack>
@@ -143,7 +124,6 @@ export const NoteListeningGame = ({
               </Card>
             </motion.div>
           </AnimatePresence>
-          <DetectedNoteIcon note={detectedNote} />
         </VStack>
       </Center>
 

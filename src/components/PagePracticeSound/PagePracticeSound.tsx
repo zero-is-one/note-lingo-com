@@ -8,17 +8,23 @@ import { Flashcard } from "@/types";
 import { InstrumentButtonNoteExplanation } from "@/components/InstrumentButtonNoteExplanation/InstrumentButtonNoteExplanation";
 import { SoundButton } from "./SoundButton";
 import { SampleSynthProvider } from "@/contexts/SampleSynthContext";
+import { BackButton } from "../BackButton/BackButton";
 
 export const PagePracticeSound = () => {
   const { hasPermission } = useMicrophoneContext();
-  if (!hasPermission) return <Start />;
 
   return (
-    <SampleSynthProvider>
-      <NoteListeningGame deck={concertinaDeck}>
-        {(props) => <FlashcardContent {...{ ...props }} />}
-      </NoteListeningGame>
-    </SampleSynthProvider>
+    <>
+      <BackButton />
+      {!hasPermission && <Start />}
+      {hasPermission && (
+        <SampleSynthProvider>
+          <NoteListeningGame deck={concertinaDeck}>
+            {(props) => <FlashcardContent {...{ ...props }} />}
+          </NoteListeningGame>
+        </SampleSynthProvider>
+      )}
+    </>
   );
 };
 

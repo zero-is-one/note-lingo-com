@@ -1,6 +1,6 @@
 import { Flashcard, InstrumentBehavior } from "@/types";
 import { angloConcertinaCgWheatstoneInstrument } from "@/config/instruments/angloConcertinaCgWheatstone";
-import { RxTextAlignBottom, RxTextAlignTop } from "react-icons/rx";
+import { CgBorderBottom, CgBorderTop } from "react-icons/cg";
 
 import { HStack, Heading, Icon } from "@chakra-ui/react";
 export const AlernateButtonClue = ({ flashcard }: { flashcard: Flashcard }) => {
@@ -31,9 +31,9 @@ export const AlernateButtonClue = ({ flashcard }: { flashcard: Flashcard }) => {
   return (
     <>
       <HStack>
-        {position === "Back" && <Icon boxSize={10} as={RxTextAlignBottom} />}
+        {position === "Back" && <Icon boxSize={10} as={CgBorderBottom} />}
         <Heading>{position}</Heading>
-        {position === "Front" && <Icon boxSize={10} as={RxTextAlignTop} />}
+        {position === "Front" && <Icon boxSize={10} as={CgBorderTop} />}
       </HStack>
     </>
   );

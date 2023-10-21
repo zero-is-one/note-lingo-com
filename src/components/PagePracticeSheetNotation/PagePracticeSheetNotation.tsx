@@ -20,6 +20,7 @@ import { Flashcard } from "@/types";
 import { InstrumentButtonNoteExplanation } from "@/components/InstrumentButtonNoteExplanation/InstrumentButtonNoteExplanation";
 import { SampleSynthProvider } from "@/contexts/SampleSynthContext";
 import { Note } from "tonal";
+import { BackButton } from "../BackButton/BackButton";
 
 type GameOptions = {
   keySignature: string;
@@ -31,17 +32,20 @@ export const PagePracticeSheetNotation = () => {
     keySignature: "C",
   });
 
-  if (!hasPermission)
-    return <Start gameOptions={gameOptions} setGameOptions={setGameOptions} />;
-
   return (
-    <SampleSynthProvider>
-      <NoteListeningGame deck={concertinaDeck}>
-        {(props) => (
-          <FlashcardContent gameOptions={gameOptions} {...{ ...props }} />
-        )}
-      </NoteListeningGame>
-    </SampleSynthProvider>
+    <>
+      <BackButton />
+      {!hasPermission && <Start {...{ gameOptions, setGameOptions }} />}
+      {hasPermission && (
+        <SampleSynthProvider>
+          <NoteListeningGame deck={concertinaDeck}>
+            {(props) => (
+              <FlashcardContent gameOptions={gameOptions} {...{ ...props }} />
+            )}
+          </NoteListeningGame>
+        </SampleSynthProvider>
+      )}
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ export const PageTest = () => {
     <div>
       <div style={{ width: "40vw", padding: 5 }}>
         <SingleNoteSheetMusic note={Note.get("C3")} />
-        {/* <CooverTablature
+        <CooverTablature
           label="3"
           position="bottom"
           action="pushBellowsButtonPress"
@@ -24,7 +24,7 @@ export const PageTest = () => {
           numberingSystem={cooverTablatureNumberingSystem}
           buttonIndex={5}
           action={"pushBellowsButtonPress"}
-        /> */}
+        />
       </div>
     </div>
   );
